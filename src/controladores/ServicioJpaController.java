@@ -5,19 +5,16 @@
  */
 package controladores;
 
-import controladores.exceptions.IllegalOrphanException;
 import controladores.exceptions.NonexistentEntityException;
 import entidades.Servicio;
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import entidades.Venta;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -35,29 +32,11 @@ public class ServicioJpaController implements Serializable {
     }
 
     public void create(Servicio servicio) {
-        if (servicio.getVentaList() == null) {
-            servicio.setVentaList(new ArrayList<Venta>());
-        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            List<Venta> attachedVentaList = new ArrayList<Venta>();
-            for (Venta ventaListVentaToAttach : servicio.getVentaList()) {
-                ventaListVentaToAttach = em.getReference(ventaListVentaToAttach.getClass(), ventaListVentaToAttach.getIdVenta());
-                attachedVentaList.add(ventaListVentaToAttach);
-            }
-            servicio.setVentaList(attachedVentaList);
             em.persist(servicio);
-            for (Venta ventaListVenta : servicio.getVentaList()) {
-                Servicio oldIdServicioOfVentaListVenta = ventaListVenta.getIdServicio();
-                ventaListVenta.setIdServicio(servicio);
-                ventaListVenta = em.merge(ventaListVenta);
-                if (oldIdServicioOfVentaListVenta != null) {
-                    oldIdServicioOfVentaListVenta.getVentaList().remove(ventaListVenta);
-                    oldIdServicioOfVentaListVenta = em.merge(oldIdServicioOfVentaListVenta);
-                }
-            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -66,45 +45,12 @@ public class ServicioJpaController implements Serializable {
         }
     }
 
-    public void edit(Servicio servicio) throws IllegalOrphanException, NonexistentEntityException, Exception {
+    public void edit(Servicio servicio) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Servicio persistentServicio = em.find(Servicio.class, servicio.getIdServicio());
-            List<Venta> ventaListOld = persistentServicio.getVentaList();
-            List<Venta> ventaListNew = servicio.getVentaList();
-            List<String> illegalOrphanMessages = null;
-            for (Venta ventaListOldVenta : ventaListOld) {
-                if (!ventaListNew.contains(ventaListOldVenta)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Venta " + ventaListOldVenta + " since its idServicio field is not nullable.");
-                }
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            List<Venta> attachedVentaListNew = new ArrayList<Venta>();
-            for (Venta ventaListNewVentaToAttach : ventaListNew) {
-                ventaListNewVentaToAttach = em.getReference(ventaListNewVentaToAttach.getClass(), ventaListNewVentaToAttach.getIdVenta());
-                attachedVentaListNew.add(ventaListNewVentaToAttach);
-            }
-            ventaListNew = attachedVentaListNew;
-            servicio.setVentaList(ventaListNew);
             servicio = em.merge(servicio);
-            for (Venta ventaListNewVenta : ventaListNew) {
-                if (!ventaListOld.contains(ventaListNewVenta)) {
-                    Servicio oldIdServicioOfVentaListNewVenta = ventaListNewVenta.getIdServicio();
-                    ventaListNewVenta.setIdServicio(servicio);
-                    ventaListNewVenta = em.merge(ventaListNewVenta);
-                    if (oldIdServicioOfVentaListNewVenta != null && !oldIdServicioOfVentaListNewVenta.equals(servicio)) {
-                        oldIdServicioOfVentaListNewVenta.getVentaList().remove(ventaListNewVenta);
-                        oldIdServicioOfVentaListNewVenta = em.merge(oldIdServicioOfVentaListNewVenta);
-                    }
-                }
-            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -122,7 +68,7 @@ public class ServicioJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
+    public void destroy(Integer id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -133,17 +79,6 @@ public class ServicioJpaController implements Serializable {
                 servicio.getIdServicio();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The servicio with id " + id + " no longer exists.", enfe);
-            }
-            List<String> illegalOrphanMessages = null;
-            List<Venta> ventaListOrphanCheck = servicio.getVentaList();
-            for (Venta ventaListOrphanCheckVenta : ventaListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Servicio (" + servicio + ") cannot be destroyed since the Venta " + ventaListOrphanCheckVenta + " in its ventaList field has a non-nullable idServicio field.");
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
             }
             em.remove(servicio);
             em.getTransaction().commit();

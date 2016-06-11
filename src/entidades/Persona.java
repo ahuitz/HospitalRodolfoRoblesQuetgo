@@ -46,8 +46,12 @@ public class Persona implements Serializable {
     private String nombre;
     private String direccion;
     private String telefono;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPersona")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idJefeServicio")
     private List<Venta> ventaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEntregadoPor")
+    private List<Venta> ventaList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRecibidoPor")
+    private List<Venta> ventaList2;
     @JoinColumn(name = "idDepartamento", referencedColumnName = "idDepartamento")
     @ManyToOne(optional = false)
     private Departamento idDepartamento;
@@ -105,6 +109,24 @@ public class Persona implements Serializable {
 
     public void setVentaList(List<Venta> ventaList) {
         this.ventaList = ventaList;
+    }
+
+    @XmlTransient
+    public List<Venta> getVentaList1() {
+        return ventaList1;
+    }
+
+    public void setVentaList1(List<Venta> ventaList1) {
+        this.ventaList1 = ventaList1;
+    }
+
+    @XmlTransient
+    public List<Venta> getVentaList2() {
+        return ventaList2;
+    }
+
+    public void setVentaList2(List<Venta> ventaList2) {
+        this.ventaList2 = ventaList2;
     }
 
     public Departamento getIdDepartamento() {

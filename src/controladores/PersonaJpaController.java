@@ -40,6 +40,12 @@ public class PersonaJpaController implements Serializable {
         if (persona.getVentaList() == null) {
             persona.setVentaList(new ArrayList<Venta>());
         }
+        if (persona.getVentaList1() == null) {
+            persona.setVentaList1(new ArrayList<Venta>());
+        }
+        if (persona.getVentaList2() == null) {
+            persona.setVentaList2(new ArrayList<Venta>());
+        }
         if (persona.getUsuarioList() == null) {
             persona.setUsuarioList(new ArrayList<Usuario>());
         }
@@ -58,6 +64,18 @@ public class PersonaJpaController implements Serializable {
                 attachedVentaList.add(ventaListVentaToAttach);
             }
             persona.setVentaList(attachedVentaList);
+            List<Venta> attachedVentaList1 = new ArrayList<Venta>();
+            for (Venta ventaList1VentaToAttach : persona.getVentaList1()) {
+                ventaList1VentaToAttach = em.getReference(ventaList1VentaToAttach.getClass(), ventaList1VentaToAttach.getIdVenta());
+                attachedVentaList1.add(ventaList1VentaToAttach);
+            }
+            persona.setVentaList1(attachedVentaList1);
+            List<Venta> attachedVentaList2 = new ArrayList<Venta>();
+            for (Venta ventaList2VentaToAttach : persona.getVentaList2()) {
+                ventaList2VentaToAttach = em.getReference(ventaList2VentaToAttach.getClass(), ventaList2VentaToAttach.getIdVenta());
+                attachedVentaList2.add(ventaList2VentaToAttach);
+            }
+            persona.setVentaList2(attachedVentaList2);
             List<Usuario> attachedUsuarioList = new ArrayList<Usuario>();
             for (Usuario usuarioListUsuarioToAttach : persona.getUsuarioList()) {
                 usuarioListUsuarioToAttach = em.getReference(usuarioListUsuarioToAttach.getClass(), usuarioListUsuarioToAttach.getIdUsuario());
@@ -70,12 +88,30 @@ public class PersonaJpaController implements Serializable {
                 idDepartamento = em.merge(idDepartamento);
             }
             for (Venta ventaListVenta : persona.getVentaList()) {
-                Persona oldIdPersonaOfVentaListVenta = ventaListVenta.getIdPersona();
-                ventaListVenta.setIdPersona(persona);
+                Persona oldIdJefeServicioOfVentaListVenta = ventaListVenta.getIdJefeServicio();
+                ventaListVenta.setIdJefeServicio(persona);
                 ventaListVenta = em.merge(ventaListVenta);
-                if (oldIdPersonaOfVentaListVenta != null) {
-                    oldIdPersonaOfVentaListVenta.getVentaList().remove(ventaListVenta);
-                    oldIdPersonaOfVentaListVenta = em.merge(oldIdPersonaOfVentaListVenta);
+                if (oldIdJefeServicioOfVentaListVenta != null) {
+                    oldIdJefeServicioOfVentaListVenta.getVentaList().remove(ventaListVenta);
+                    oldIdJefeServicioOfVentaListVenta = em.merge(oldIdJefeServicioOfVentaListVenta);
+                }
+            }
+            for (Venta ventaList1Venta : persona.getVentaList1()) {
+                Persona oldIdEntregadoPorOfVentaList1Venta = ventaList1Venta.getIdEntregadoPor();
+                ventaList1Venta.setIdEntregadoPor(persona);
+                ventaList1Venta = em.merge(ventaList1Venta);
+                if (oldIdEntregadoPorOfVentaList1Venta != null) {
+                    oldIdEntregadoPorOfVentaList1Venta.getVentaList1().remove(ventaList1Venta);
+                    oldIdEntregadoPorOfVentaList1Venta = em.merge(oldIdEntregadoPorOfVentaList1Venta);
+                }
+            }
+            for (Venta ventaList2Venta : persona.getVentaList2()) {
+                Persona oldIdRecibidoPorOfVentaList2Venta = ventaList2Venta.getIdRecibidoPor();
+                ventaList2Venta.setIdRecibidoPor(persona);
+                ventaList2Venta = em.merge(ventaList2Venta);
+                if (oldIdRecibidoPorOfVentaList2Venta != null) {
+                    oldIdRecibidoPorOfVentaList2Venta.getVentaList2().remove(ventaList2Venta);
+                    oldIdRecibidoPorOfVentaList2Venta = em.merge(oldIdRecibidoPorOfVentaList2Venta);
                 }
             }
             for (Usuario usuarioListUsuario : persona.getUsuarioList()) {
@@ -105,6 +141,10 @@ public class PersonaJpaController implements Serializable {
             Departamento idDepartamentoNew = persona.getIdDepartamento();
             List<Venta> ventaListOld = persistentPersona.getVentaList();
             List<Venta> ventaListNew = persona.getVentaList();
+            List<Venta> ventaList1Old = persistentPersona.getVentaList1();
+            List<Venta> ventaList1New = persona.getVentaList1();
+            List<Venta> ventaList2Old = persistentPersona.getVentaList2();
+            List<Venta> ventaList2New = persona.getVentaList2();
             List<Usuario> usuarioListOld = persistentPersona.getUsuarioList();
             List<Usuario> usuarioListNew = persona.getUsuarioList();
             List<String> illegalOrphanMessages = null;
@@ -113,7 +153,23 @@ public class PersonaJpaController implements Serializable {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Venta " + ventaListOldVenta + " since its idPersona field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Venta " + ventaListOldVenta + " since its idJefeServicio field is not nullable.");
+                }
+            }
+            for (Venta ventaList1OldVenta : ventaList1Old) {
+                if (!ventaList1New.contains(ventaList1OldVenta)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Venta " + ventaList1OldVenta + " since its idEntregadoPor field is not nullable.");
+                }
+            }
+            for (Venta ventaList2OldVenta : ventaList2Old) {
+                if (!ventaList2New.contains(ventaList2OldVenta)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Venta " + ventaList2OldVenta + " since its idRecibidoPor field is not nullable.");
                 }
             }
             for (Usuario usuarioListOldUsuario : usuarioListOld) {
@@ -138,6 +194,20 @@ public class PersonaJpaController implements Serializable {
             }
             ventaListNew = attachedVentaListNew;
             persona.setVentaList(ventaListNew);
+            List<Venta> attachedVentaList1New = new ArrayList<Venta>();
+            for (Venta ventaList1NewVentaToAttach : ventaList1New) {
+                ventaList1NewVentaToAttach = em.getReference(ventaList1NewVentaToAttach.getClass(), ventaList1NewVentaToAttach.getIdVenta());
+                attachedVentaList1New.add(ventaList1NewVentaToAttach);
+            }
+            ventaList1New = attachedVentaList1New;
+            persona.setVentaList1(ventaList1New);
+            List<Venta> attachedVentaList2New = new ArrayList<Venta>();
+            for (Venta ventaList2NewVentaToAttach : ventaList2New) {
+                ventaList2NewVentaToAttach = em.getReference(ventaList2NewVentaToAttach.getClass(), ventaList2NewVentaToAttach.getIdVenta());
+                attachedVentaList2New.add(ventaList2NewVentaToAttach);
+            }
+            ventaList2New = attachedVentaList2New;
+            persona.setVentaList2(ventaList2New);
             List<Usuario> attachedUsuarioListNew = new ArrayList<Usuario>();
             for (Usuario usuarioListNewUsuarioToAttach : usuarioListNew) {
                 usuarioListNewUsuarioToAttach = em.getReference(usuarioListNewUsuarioToAttach.getClass(), usuarioListNewUsuarioToAttach.getIdUsuario());
@@ -156,12 +226,34 @@ public class PersonaJpaController implements Serializable {
             }
             for (Venta ventaListNewVenta : ventaListNew) {
                 if (!ventaListOld.contains(ventaListNewVenta)) {
-                    Persona oldIdPersonaOfVentaListNewVenta = ventaListNewVenta.getIdPersona();
-                    ventaListNewVenta.setIdPersona(persona);
+                    Persona oldIdJefeServicioOfVentaListNewVenta = ventaListNewVenta.getIdJefeServicio();
+                    ventaListNewVenta.setIdJefeServicio(persona);
                     ventaListNewVenta = em.merge(ventaListNewVenta);
-                    if (oldIdPersonaOfVentaListNewVenta != null && !oldIdPersonaOfVentaListNewVenta.equals(persona)) {
-                        oldIdPersonaOfVentaListNewVenta.getVentaList().remove(ventaListNewVenta);
-                        oldIdPersonaOfVentaListNewVenta = em.merge(oldIdPersonaOfVentaListNewVenta);
+                    if (oldIdJefeServicioOfVentaListNewVenta != null && !oldIdJefeServicioOfVentaListNewVenta.equals(persona)) {
+                        oldIdJefeServicioOfVentaListNewVenta.getVentaList().remove(ventaListNewVenta);
+                        oldIdJefeServicioOfVentaListNewVenta = em.merge(oldIdJefeServicioOfVentaListNewVenta);
+                    }
+                }
+            }
+            for (Venta ventaList1NewVenta : ventaList1New) {
+                if (!ventaList1Old.contains(ventaList1NewVenta)) {
+                    Persona oldIdEntregadoPorOfVentaList1NewVenta = ventaList1NewVenta.getIdEntregadoPor();
+                    ventaList1NewVenta.setIdEntregadoPor(persona);
+                    ventaList1NewVenta = em.merge(ventaList1NewVenta);
+                    if (oldIdEntregadoPorOfVentaList1NewVenta != null && !oldIdEntregadoPorOfVentaList1NewVenta.equals(persona)) {
+                        oldIdEntregadoPorOfVentaList1NewVenta.getVentaList1().remove(ventaList1NewVenta);
+                        oldIdEntregadoPorOfVentaList1NewVenta = em.merge(oldIdEntregadoPorOfVentaList1NewVenta);
+                    }
+                }
+            }
+            for (Venta ventaList2NewVenta : ventaList2New) {
+                if (!ventaList2Old.contains(ventaList2NewVenta)) {
+                    Persona oldIdRecibidoPorOfVentaList2NewVenta = ventaList2NewVenta.getIdRecibidoPor();
+                    ventaList2NewVenta.setIdRecibidoPor(persona);
+                    ventaList2NewVenta = em.merge(ventaList2NewVenta);
+                    if (oldIdRecibidoPorOfVentaList2NewVenta != null && !oldIdRecibidoPorOfVentaList2NewVenta.equals(persona)) {
+                        oldIdRecibidoPorOfVentaList2NewVenta.getVentaList2().remove(ventaList2NewVenta);
+                        oldIdRecibidoPorOfVentaList2NewVenta = em.merge(oldIdRecibidoPorOfVentaList2NewVenta);
                     }
                 }
             }
@@ -211,7 +303,21 @@ public class PersonaJpaController implements Serializable {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Persona (" + persona + ") cannot be destroyed since the Venta " + ventaListOrphanCheckVenta + " in its ventaList field has a non-nullable idPersona field.");
+                illegalOrphanMessages.add("This Persona (" + persona + ") cannot be destroyed since the Venta " + ventaListOrphanCheckVenta + " in its ventaList field has a non-nullable idJefeServicio field.");
+            }
+            List<Venta> ventaList1OrphanCheck = persona.getVentaList1();
+            for (Venta ventaList1OrphanCheckVenta : ventaList1OrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Persona (" + persona + ") cannot be destroyed since the Venta " + ventaList1OrphanCheckVenta + " in its ventaList1 field has a non-nullable idEntregadoPor field.");
+            }
+            List<Venta> ventaList2OrphanCheck = persona.getVentaList2();
+            for (Venta ventaList2OrphanCheckVenta : ventaList2OrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Persona (" + persona + ") cannot be destroyed since the Venta " + ventaList2OrphanCheckVenta + " in its ventaList2 field has a non-nullable idRecibidoPor field.");
             }
             List<Usuario> usuarioListOrphanCheck = persona.getUsuarioList();
             for (Usuario usuarioListOrphanCheckUsuario : usuarioListOrphanCheck) {

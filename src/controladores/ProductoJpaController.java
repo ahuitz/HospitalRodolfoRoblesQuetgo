@@ -14,6 +14,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import entidades.Presentacion;
 import entidades.Renglon;
+import entidades.Cuenta;
 import entidades.Detalleventa;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +63,11 @@ public class ProductoJpaController implements Serializable {
                 idRenglon = em.getReference(idRenglon.getClass(), idRenglon.getIdRenglon());
                 producto.setIdRenglon(idRenglon);
             }
+            Cuenta idCuenta = producto.getIdCuenta();
+            if (idCuenta != null) {
+                idCuenta = em.getReference(idCuenta.getClass(), idCuenta.getIdCuenta());
+                producto.setIdCuenta(idCuenta);
+            }
             List<Detalleventa> attachedDetalleventaList = new ArrayList<Detalleventa>();
             for (Detalleventa detalleventaListDetalleventaToAttach : producto.getDetalleventaList()) {
                 detalleventaListDetalleventaToAttach = em.getReference(detalleventaListDetalleventaToAttach.getClass(), detalleventaListDetalleventaToAttach.getIdDetalleVenta());
@@ -88,6 +94,10 @@ public class ProductoJpaController implements Serializable {
             if (idRenglon != null) {
                 idRenglon.getProductoList().add(producto);
                 idRenglon = em.merge(idRenglon);
+            }
+            if (idCuenta != null) {
+                idCuenta.getProductoList().add(producto);
+                idCuenta = em.merge(idCuenta);
             }
             for (Detalleventa detalleventaListDetalleventa : producto.getDetalleventaList()) {
                 Producto oldIdProductoOfDetalleventaListDetalleventa = detalleventaListDetalleventa.getIdProducto();
@@ -134,6 +144,8 @@ public class ProductoJpaController implements Serializable {
             Presentacion idPresentacionNew = producto.getIdPresentacion();
             Renglon idRenglonOld = persistentProducto.getIdRenglon();
             Renglon idRenglonNew = producto.getIdRenglon();
+            Cuenta idCuentaOld = persistentProducto.getIdCuenta();
+            Cuenta idCuentaNew = producto.getIdCuenta();
             List<Detalleventa> detalleventaListOld = persistentProducto.getDetalleventaList();
             List<Detalleventa> detalleventaListNew = producto.getDetalleventaList();
             List<Kardex> kardexListOld = persistentProducto.getKardexList();
@@ -176,6 +188,10 @@ public class ProductoJpaController implements Serializable {
                 idRenglonNew = em.getReference(idRenglonNew.getClass(), idRenglonNew.getIdRenglon());
                 producto.setIdRenglon(idRenglonNew);
             }
+            if (idCuentaNew != null) {
+                idCuentaNew = em.getReference(idCuentaNew.getClass(), idCuentaNew.getIdCuenta());
+                producto.setIdCuenta(idCuentaNew);
+            }
             List<Detalleventa> attachedDetalleventaListNew = new ArrayList<Detalleventa>();
             for (Detalleventa detalleventaListNewDetalleventaToAttach : detalleventaListNew) {
                 detalleventaListNewDetalleventaToAttach = em.getReference(detalleventaListNewDetalleventaToAttach.getClass(), detalleventaListNewDetalleventaToAttach.getIdDetalleVenta());
@@ -213,6 +229,14 @@ public class ProductoJpaController implements Serializable {
             if (idRenglonNew != null && !idRenglonNew.equals(idRenglonOld)) {
                 idRenglonNew.getProductoList().add(producto);
                 idRenglonNew = em.merge(idRenglonNew);
+            }
+            if (idCuentaOld != null && !idCuentaOld.equals(idCuentaNew)) {
+                idCuentaOld.getProductoList().remove(producto);
+                idCuentaOld = em.merge(idCuentaOld);
+            }
+            if (idCuentaNew != null && !idCuentaNew.equals(idCuentaOld)) {
+                idCuentaNew.getProductoList().add(producto);
+                idCuentaNew = em.merge(idCuentaNew);
             }
             for (Detalleventa detalleventaListNewDetalleventa : detalleventaListNew) {
                 if (!detalleventaListOld.contains(detalleventaListNewDetalleventa)) {
@@ -310,6 +334,11 @@ public class ProductoJpaController implements Serializable {
             if (idRenglon != null) {
                 idRenglon.getProductoList().remove(producto);
                 idRenglon = em.merge(idRenglon);
+            }
+            Cuenta idCuenta = producto.getIdCuenta();
+            if (idCuenta != null) {
+                idCuenta.getProductoList().remove(producto);
+                idCuenta = em.merge(idCuenta);
             }
             em.remove(producto);
             em.getTransaction().commit();

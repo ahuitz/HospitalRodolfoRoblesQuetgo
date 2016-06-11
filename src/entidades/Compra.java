@@ -35,8 +35,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Compra.findAll", query = "SELECT c FROM Compra c"),
     @NamedQuery(name = "Compra.findByIdCompra", query = "SELECT c FROM Compra c WHERE c.idCompra = :idCompra"),
-    @NamedQuery(name = "Compra.findByNoRequisicion", query = "SELECT c FROM Compra c WHERE c.noRequisicion = :noRequisicion"),
+    @NamedQuery(name = "Compra.findByNoOrdenCyP", query = "SELECT c FROM Compra c WHERE c.noOrdenCyP = :noOrdenCyP"),
     @NamedQuery(name = "Compra.findByFecha", query = "SELECT c FROM Compra c WHERE c.fecha = :fecha"),
+    @NamedQuery(name = "Compra.findByNumero", query = "SELECT c FROM Compra c WHERE c.numero = :numero"),
+    @NamedQuery(name = "Compra.findByPrograma", query = "SELECT c FROM Compra c WHERE c.programa = :programa"),
+    @NamedQuery(name = "Compra.findByDependencia", query = "SELECT c FROM Compra c WHERE c.dependencia = :dependencia"),
     @NamedQuery(name = "Compra.findByTotal", query = "SELECT c FROM Compra c WHERE c.total = :total")})
 public class Compra implements Serializable {
 
@@ -46,10 +49,16 @@ public class Compra implements Serializable {
     @Basic(optional = false)
     private Integer idCompra;
     @Basic(optional = false)
-    private int noRequisicion;
+    private int noOrdenCyP;
     @Basic(optional = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
+    @Basic(optional = false)
+    private int numero;
+    @Basic(optional = false)
+    private String programa;
+    @Basic(optional = false)
+    private String dependencia;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     private Double total;
     @JoinColumn(name = "idProveedor", referencedColumnName = "idProveedor")
@@ -68,10 +77,13 @@ public class Compra implements Serializable {
         this.idCompra = idCompra;
     }
 
-    public Compra(Integer idCompra, int noRequisicion, Date fecha) {
+    public Compra(Integer idCompra, int noOrdenCyP, Date fecha, int numero, String programa, String dependencia) {
         this.idCompra = idCompra;
-        this.noRequisicion = noRequisicion;
+        this.noOrdenCyP = noOrdenCyP;
         this.fecha = fecha;
+        this.numero = numero;
+        this.programa = programa;
+        this.dependencia = dependencia;
     }
 
     public Integer getIdCompra() {
@@ -82,12 +94,12 @@ public class Compra implements Serializable {
         this.idCompra = idCompra;
     }
 
-    public int getNoRequisicion() {
-        return noRequisicion;
+    public int getNoOrdenCyP() {
+        return noOrdenCyP;
     }
 
-    public void setNoRequisicion(int noRequisicion) {
-        this.noRequisicion = noRequisicion;
+    public void setNoOrdenCyP(int noOrdenCyP) {
+        this.noOrdenCyP = noOrdenCyP;
     }
 
     public Date getFecha() {
@@ -96,6 +108,30 @@ public class Compra implements Serializable {
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public String getPrograma() {
+        return programa;
+    }
+
+    public void setPrograma(String programa) {
+        this.programa = programa;
+    }
+
+    public String getDependencia() {
+        return dependencia;
+    }
+
+    public void setDependencia(String dependencia) {
+        this.dependencia = dependencia;
     }
 
     public Double getTotal() {

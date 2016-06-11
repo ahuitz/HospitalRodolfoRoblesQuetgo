@@ -7,7 +7,7 @@ package controladores;
 
 import controladores.exceptions.IllegalOrphanException;
 import controladores.exceptions.NonexistentEntityException;
-import entidades.Presentacion;
+import entidades.Cuenta;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -23,9 +23,9 @@ import javax.persistence.EntityManagerFactory;
  *
  * @author Pablo Lopez <panlopezv@gmail.com>
  */
-public class PresentacionJpaController implements Serializable {
+public class CuentaJpaController implements Serializable {
 
-    public PresentacionJpaController(EntityManagerFactory emf) {
+    public CuentaJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
@@ -34,28 +34,28 @@ public class PresentacionJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Presentacion presentacion) {
-        if (presentacion.getProductoList() == null) {
-            presentacion.setProductoList(new ArrayList<Producto>());
+    public void create(Cuenta cuenta) {
+        if (cuenta.getProductoList() == null) {
+            cuenta.setProductoList(new ArrayList<Producto>());
         }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             List<Producto> attachedProductoList = new ArrayList<Producto>();
-            for (Producto productoListProductoToAttach : presentacion.getProductoList()) {
+            for (Producto productoListProductoToAttach : cuenta.getProductoList()) {
                 productoListProductoToAttach = em.getReference(productoListProductoToAttach.getClass(), productoListProductoToAttach.getIdProducto());
                 attachedProductoList.add(productoListProductoToAttach);
             }
-            presentacion.setProductoList(attachedProductoList);
-            em.persist(presentacion);
-            for (Producto productoListProducto : presentacion.getProductoList()) {
-                Presentacion oldIdPresentacionOfProductoListProducto = productoListProducto.getIdPresentacion();
-                productoListProducto.setIdPresentacion(presentacion);
+            cuenta.setProductoList(attachedProductoList);
+            em.persist(cuenta);
+            for (Producto productoListProducto : cuenta.getProductoList()) {
+                Cuenta oldIdCuentaOfProductoListProducto = productoListProducto.getIdCuenta();
+                productoListProducto.setIdCuenta(cuenta);
                 productoListProducto = em.merge(productoListProducto);
-                if (oldIdPresentacionOfProductoListProducto != null) {
-                    oldIdPresentacionOfProductoListProducto.getProductoList().remove(productoListProducto);
-                    oldIdPresentacionOfProductoListProducto = em.merge(oldIdPresentacionOfProductoListProducto);
+                if (oldIdCuentaOfProductoListProducto != null) {
+                    oldIdCuentaOfProductoListProducto.getProductoList().remove(productoListProducto);
+                    oldIdCuentaOfProductoListProducto = em.merge(oldIdCuentaOfProductoListProducto);
                 }
             }
             em.getTransaction().commit();
@@ -66,21 +66,21 @@ public class PresentacionJpaController implements Serializable {
         }
     }
 
-    public void edit(Presentacion presentacion) throws IllegalOrphanException, NonexistentEntityException, Exception {
+    public void edit(Cuenta cuenta) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Presentacion persistentPresentacion = em.find(Presentacion.class, presentacion.getIdPresentacion());
-            List<Producto> productoListOld = persistentPresentacion.getProductoList();
-            List<Producto> productoListNew = presentacion.getProductoList();
+            Cuenta persistentCuenta = em.find(Cuenta.class, cuenta.getIdCuenta());
+            List<Producto> productoListOld = persistentCuenta.getProductoList();
+            List<Producto> productoListNew = cuenta.getProductoList();
             List<String> illegalOrphanMessages = null;
             for (Producto productoListOldProducto : productoListOld) {
                 if (!productoListNew.contains(productoListOldProducto)) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Producto " + productoListOldProducto + " since its idPresentacion field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Producto " + productoListOldProducto + " since its idCuenta field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -92,16 +92,16 @@ public class PresentacionJpaController implements Serializable {
                 attachedProductoListNew.add(productoListNewProductoToAttach);
             }
             productoListNew = attachedProductoListNew;
-            presentacion.setProductoList(productoListNew);
-            presentacion = em.merge(presentacion);
+            cuenta.setProductoList(productoListNew);
+            cuenta = em.merge(cuenta);
             for (Producto productoListNewProducto : productoListNew) {
                 if (!productoListOld.contains(productoListNewProducto)) {
-                    Presentacion oldIdPresentacionOfProductoListNewProducto = productoListNewProducto.getIdPresentacion();
-                    productoListNewProducto.setIdPresentacion(presentacion);
+                    Cuenta oldIdCuentaOfProductoListNewProducto = productoListNewProducto.getIdCuenta();
+                    productoListNewProducto.setIdCuenta(cuenta);
                     productoListNewProducto = em.merge(productoListNewProducto);
-                    if (oldIdPresentacionOfProductoListNewProducto != null && !oldIdPresentacionOfProductoListNewProducto.equals(presentacion)) {
-                        oldIdPresentacionOfProductoListNewProducto.getProductoList().remove(productoListNewProducto);
-                        oldIdPresentacionOfProductoListNewProducto = em.merge(oldIdPresentacionOfProductoListNewProducto);
+                    if (oldIdCuentaOfProductoListNewProducto != null && !oldIdCuentaOfProductoListNewProducto.equals(cuenta)) {
+                        oldIdCuentaOfProductoListNewProducto.getProductoList().remove(productoListNewProducto);
+                        oldIdCuentaOfProductoListNewProducto = em.merge(oldIdCuentaOfProductoListNewProducto);
                     }
                 }
             }
@@ -109,9 +109,9 @@ public class PresentacionJpaController implements Serializable {
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = presentacion.getIdPresentacion();
-                if (findPresentacion(id) == null) {
-                    throw new NonexistentEntityException("The presentacion with id " + id + " no longer exists.");
+                Integer id = cuenta.getIdCuenta();
+                if (findCuenta(id) == null) {
+                    throw new NonexistentEntityException("The cuenta with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -127,25 +127,25 @@ public class PresentacionJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Presentacion presentacion;
+            Cuenta cuenta;
             try {
-                presentacion = em.getReference(Presentacion.class, id);
-                presentacion.getIdPresentacion();
+                cuenta = em.getReference(Cuenta.class, id);
+                cuenta.getIdCuenta();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The presentacion with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The cuenta with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            List<Producto> productoListOrphanCheck = presentacion.getProductoList();
+            List<Producto> productoListOrphanCheck = cuenta.getProductoList();
             for (Producto productoListOrphanCheckProducto : productoListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Presentacion (" + presentacion + ") cannot be destroyed since the Producto " + productoListOrphanCheckProducto + " in its productoList field has a non-nullable idPresentacion field.");
+                illegalOrphanMessages.add("This Cuenta (" + cuenta + ") cannot be destroyed since the Producto " + productoListOrphanCheckProducto + " in its productoList field has a non-nullable idCuenta field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            em.remove(presentacion);
+            em.remove(cuenta);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -154,19 +154,19 @@ public class PresentacionJpaController implements Serializable {
         }
     }
 
-    public List<Presentacion> findPresentacionEntities() {
-        return findPresentacionEntities(true, -1, -1);
+    public List<Cuenta> findCuentaEntities() {
+        return findCuentaEntities(true, -1, -1);
     }
 
-    public List<Presentacion> findPresentacionEntities(int maxResults, int firstResult) {
-        return findPresentacionEntities(false, maxResults, firstResult);
+    public List<Cuenta> findCuentaEntities(int maxResults, int firstResult) {
+        return findCuentaEntities(false, maxResults, firstResult);
     }
 
-    private List<Presentacion> findPresentacionEntities(boolean all, int maxResults, int firstResult) {
+    private List<Cuenta> findCuentaEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Presentacion.class));
+            cq.select(cq.from(Cuenta.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -178,20 +178,20 @@ public class PresentacionJpaController implements Serializable {
         }
     }
 
-    public Presentacion findPresentacion(Integer id) {
+    public Cuenta findCuenta(Integer id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Presentacion.class, id);
+            return em.find(Cuenta.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getPresentacionCount() {
+    public int getCuentaCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Presentacion> rt = cq.from(Presentacion.class);
+            Root<Cuenta> rt = cq.from(Cuenta.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();

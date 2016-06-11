@@ -19,6 +19,7 @@
     <class>entidades.Permiso</class>
     <class>entidades.Producto</class>
     <class>entidades.Usuario</class>
+    <class>entidades.Cuenta</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/hrobles?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

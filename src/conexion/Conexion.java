@@ -7,6 +7,10 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.swing.JOptionPane;
 
+/**
+ *
+ * @author Pablo Lopez <panlopezv@gmail.com>
+ */
 public class Conexion {
 
     private EntityManagerFactory emf;

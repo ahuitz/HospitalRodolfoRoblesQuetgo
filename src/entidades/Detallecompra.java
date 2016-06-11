@@ -30,7 +30,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Detallecompra.findByIdDetalleCompra", query = "SELECT d FROM Detallecompra d WHERE d.idDetalleCompra = :idDetalleCompra"),
     @NamedQuery(name = "Detallecompra.findByCantidad", query = "SELECT d FROM Detallecompra d WHERE d.cantidad = :cantidad"),
     @NamedQuery(name = "Detallecompra.findByCosto", query = "SELECT d FROM Detallecompra d WHERE d.costo = :costo"),
-    @NamedQuery(name = "Detallecompra.findBySubtotal", query = "SELECT d FROM Detallecompra d WHERE d.subtotal = :subtotal")})
+    @NamedQuery(name = "Detallecompra.findBySubtotal", query = "SELECT d FROM Detallecompra d WHERE d.subtotal = :subtotal"),
+    @NamedQuery(name = "Detallecompra.findByFolioAlmacen", query = "SELECT d FROM Detallecompra d WHERE d.folioAlmacen = :folioAlmacen"),
+    @NamedQuery(name = "Detallecompra.findByFolioInventario", query = "SELECT d FROM Detallecompra d WHERE d.folioInventario = :folioInventario")})
 public class Detallecompra implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,6 +45,8 @@ public class Detallecompra implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     private Double costo;
     private Double subtotal;
+    private String folioAlmacen;
+    private String folioInventario;
     @JoinColumn(name = "idCompra", referencedColumnName = "idCompra")
     @ManyToOne(optional = false)
     private Compra idCompra;
@@ -92,6 +96,22 @@ public class Detallecompra implements Serializable {
 
     public void setSubtotal(Double subtotal) {
         this.subtotal = subtotal;
+    }
+
+    public String getFolioAlmacen() {
+        return folioAlmacen;
+    }
+
+    public void setFolioAlmacen(String folioAlmacen) {
+        this.folioAlmacen = folioAlmacen;
+    }
+
+    public String getFolioInventario() {
+        return folioInventario;
+    }
+
+    public void setFolioInventario(String folioInventario) {
+        this.folioInventario = folioInventario;
     }
 
     public Compra getIdCompra() {

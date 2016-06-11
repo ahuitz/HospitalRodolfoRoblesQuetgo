@@ -14,7 +14,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import entidades.Persona;
 import entidades.Usuario;
-import entidades.Servicio;
 import entidades.Detalleventa;
 import entidades.Venta;
 import java.util.ArrayList;
@@ -45,20 +44,25 @@ public class VentaJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Persona idPersona = venta.getIdPersona();
-            if (idPersona != null) {
-                idPersona = em.getReference(idPersona.getClass(), idPersona.getIdPersona());
-                venta.setIdPersona(idPersona);
+            Persona idJefeServicio = venta.getIdJefeServicio();
+            if (idJefeServicio != null) {
+                idJefeServicio = em.getReference(idJefeServicio.getClass(), idJefeServicio.getIdPersona());
+                venta.setIdJefeServicio(idJefeServicio);
+            }
+            Persona idEntregadoPor = venta.getIdEntregadoPor();
+            if (idEntregadoPor != null) {
+                idEntregadoPor = em.getReference(idEntregadoPor.getClass(), idEntregadoPor.getIdPersona());
+                venta.setIdEntregadoPor(idEntregadoPor);
+            }
+            Persona idRecibidoPor = venta.getIdRecibidoPor();
+            if (idRecibidoPor != null) {
+                idRecibidoPor = em.getReference(idRecibidoPor.getClass(), idRecibidoPor.getIdPersona());
+                venta.setIdRecibidoPor(idRecibidoPor);
             }
             Usuario idUsuario = venta.getIdUsuario();
             if (idUsuario != null) {
                 idUsuario = em.getReference(idUsuario.getClass(), idUsuario.getIdUsuario());
                 venta.setIdUsuario(idUsuario);
-            }
-            Servicio idServicio = venta.getIdServicio();
-            if (idServicio != null) {
-                idServicio = em.getReference(idServicio.getClass(), idServicio.getIdServicio());
-                venta.setIdServicio(idServicio);
             }
             List<Detalleventa> attachedDetalleventaList = new ArrayList<Detalleventa>();
             for (Detalleventa detalleventaListDetalleventaToAttach : venta.getDetalleventaList()) {
@@ -67,17 +71,21 @@ public class VentaJpaController implements Serializable {
             }
             venta.setDetalleventaList(attachedDetalleventaList);
             em.persist(venta);
-            if (idPersona != null) {
-                idPersona.getVentaList().add(venta);
-                idPersona = em.merge(idPersona);
+            if (idJefeServicio != null) {
+                idJefeServicio.getVentaList().add(venta);
+                idJefeServicio = em.merge(idJefeServicio);
+            }
+            if (idEntregadoPor != null) {
+                idEntregadoPor.getVentaList().add(venta);
+                idEntregadoPor = em.merge(idEntregadoPor);
+            }
+            if (idRecibidoPor != null) {
+                idRecibidoPor.getVentaList().add(venta);
+                idRecibidoPor = em.merge(idRecibidoPor);
             }
             if (idUsuario != null) {
                 idUsuario.getVentaList().add(venta);
                 idUsuario = em.merge(idUsuario);
-            }
-            if (idServicio != null) {
-                idServicio.getVentaList().add(venta);
-                idServicio = em.merge(idServicio);
             }
             for (Detalleventa detalleventaListDetalleventa : venta.getDetalleventaList()) {
                 Venta oldIdVentaOfDetalleventaListDetalleventa = detalleventaListDetalleventa.getIdVenta();
@@ -102,12 +110,14 @@ public class VentaJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Venta persistentVenta = em.find(Venta.class, venta.getIdVenta());
-            Persona idPersonaOld = persistentVenta.getIdPersona();
-            Persona idPersonaNew = venta.getIdPersona();
+            Persona idJefeServicioOld = persistentVenta.getIdJefeServicio();
+            Persona idJefeServicioNew = venta.getIdJefeServicio();
+            Persona idEntregadoPorOld = persistentVenta.getIdEntregadoPor();
+            Persona idEntregadoPorNew = venta.getIdEntregadoPor();
+            Persona idRecibidoPorOld = persistentVenta.getIdRecibidoPor();
+            Persona idRecibidoPorNew = venta.getIdRecibidoPor();
             Usuario idUsuarioOld = persistentVenta.getIdUsuario();
             Usuario idUsuarioNew = venta.getIdUsuario();
-            Servicio idServicioOld = persistentVenta.getIdServicio();
-            Servicio idServicioNew = venta.getIdServicio();
             List<Detalleventa> detalleventaListOld = persistentVenta.getDetalleventaList();
             List<Detalleventa> detalleventaListNew = venta.getDetalleventaList();
             List<String> illegalOrphanMessages = null;
@@ -122,17 +132,21 @@ public class VentaJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            if (idPersonaNew != null) {
-                idPersonaNew = em.getReference(idPersonaNew.getClass(), idPersonaNew.getIdPersona());
-                venta.setIdPersona(idPersonaNew);
+            if (idJefeServicioNew != null) {
+                idJefeServicioNew = em.getReference(idJefeServicioNew.getClass(), idJefeServicioNew.getIdPersona());
+                venta.setIdJefeServicio(idJefeServicioNew);
+            }
+            if (idEntregadoPorNew != null) {
+                idEntregadoPorNew = em.getReference(idEntregadoPorNew.getClass(), idEntregadoPorNew.getIdPersona());
+                venta.setIdEntregadoPor(idEntregadoPorNew);
+            }
+            if (idRecibidoPorNew != null) {
+                idRecibidoPorNew = em.getReference(idRecibidoPorNew.getClass(), idRecibidoPorNew.getIdPersona());
+                venta.setIdRecibidoPor(idRecibidoPorNew);
             }
             if (idUsuarioNew != null) {
                 idUsuarioNew = em.getReference(idUsuarioNew.getClass(), idUsuarioNew.getIdUsuario());
                 venta.setIdUsuario(idUsuarioNew);
-            }
-            if (idServicioNew != null) {
-                idServicioNew = em.getReference(idServicioNew.getClass(), idServicioNew.getIdServicio());
-                venta.setIdServicio(idServicioNew);
             }
             List<Detalleventa> attachedDetalleventaListNew = new ArrayList<Detalleventa>();
             for (Detalleventa detalleventaListNewDetalleventaToAttach : detalleventaListNew) {
@@ -142,13 +156,29 @@ public class VentaJpaController implements Serializable {
             detalleventaListNew = attachedDetalleventaListNew;
             venta.setDetalleventaList(detalleventaListNew);
             venta = em.merge(venta);
-            if (idPersonaOld != null && !idPersonaOld.equals(idPersonaNew)) {
-                idPersonaOld.getVentaList().remove(venta);
-                idPersonaOld = em.merge(idPersonaOld);
+            if (idJefeServicioOld != null && !idJefeServicioOld.equals(idJefeServicioNew)) {
+                idJefeServicioOld.getVentaList().remove(venta);
+                idJefeServicioOld = em.merge(idJefeServicioOld);
             }
-            if (idPersonaNew != null && !idPersonaNew.equals(idPersonaOld)) {
-                idPersonaNew.getVentaList().add(venta);
-                idPersonaNew = em.merge(idPersonaNew);
+            if (idJefeServicioNew != null && !idJefeServicioNew.equals(idJefeServicioOld)) {
+                idJefeServicioNew.getVentaList().add(venta);
+                idJefeServicioNew = em.merge(idJefeServicioNew);
+            }
+            if (idEntregadoPorOld != null && !idEntregadoPorOld.equals(idEntregadoPorNew)) {
+                idEntregadoPorOld.getVentaList().remove(venta);
+                idEntregadoPorOld = em.merge(idEntregadoPorOld);
+            }
+            if (idEntregadoPorNew != null && !idEntregadoPorNew.equals(idEntregadoPorOld)) {
+                idEntregadoPorNew.getVentaList().add(venta);
+                idEntregadoPorNew = em.merge(idEntregadoPorNew);
+            }
+            if (idRecibidoPorOld != null && !idRecibidoPorOld.equals(idRecibidoPorNew)) {
+                idRecibidoPorOld.getVentaList().remove(venta);
+                idRecibidoPorOld = em.merge(idRecibidoPorOld);
+            }
+            if (idRecibidoPorNew != null && !idRecibidoPorNew.equals(idRecibidoPorOld)) {
+                idRecibidoPorNew.getVentaList().add(venta);
+                idRecibidoPorNew = em.merge(idRecibidoPorNew);
             }
             if (idUsuarioOld != null && !idUsuarioOld.equals(idUsuarioNew)) {
                 idUsuarioOld.getVentaList().remove(venta);
@@ -157,14 +187,6 @@ public class VentaJpaController implements Serializable {
             if (idUsuarioNew != null && !idUsuarioNew.equals(idUsuarioOld)) {
                 idUsuarioNew.getVentaList().add(venta);
                 idUsuarioNew = em.merge(idUsuarioNew);
-            }
-            if (idServicioOld != null && !idServicioOld.equals(idServicioNew)) {
-                idServicioOld.getVentaList().remove(venta);
-                idServicioOld = em.merge(idServicioOld);
-            }
-            if (idServicioNew != null && !idServicioNew.equals(idServicioOld)) {
-                idServicioNew.getVentaList().add(venta);
-                idServicioNew = em.merge(idServicioNew);
             }
             for (Detalleventa detalleventaListNewDetalleventa : detalleventaListNew) {
                 if (!detalleventaListOld.contains(detalleventaListNewDetalleventa)) {
@@ -217,20 +239,25 @@ public class VentaJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            Persona idPersona = venta.getIdPersona();
-            if (idPersona != null) {
-                idPersona.getVentaList().remove(venta);
-                idPersona = em.merge(idPersona);
+            Persona idJefeServicio = venta.getIdJefeServicio();
+            if (idJefeServicio != null) {
+                idJefeServicio.getVentaList().remove(venta);
+                idJefeServicio = em.merge(idJefeServicio);
+            }
+            Persona idEntregadoPor = venta.getIdEntregadoPor();
+            if (idEntregadoPor != null) {
+                idEntregadoPor.getVentaList().remove(venta);
+                idEntregadoPor = em.merge(idEntregadoPor);
+            }
+            Persona idRecibidoPor = venta.getIdRecibidoPor();
+            if (idRecibidoPor != null) {
+                idRecibidoPor.getVentaList().remove(venta);
+                idRecibidoPor = em.merge(idRecibidoPor);
             }
             Usuario idUsuario = venta.getIdUsuario();
             if (idUsuario != null) {
                 idUsuario.getVentaList().remove(venta);
                 idUsuario = em.merge(idUsuario);
-            }
-            Servicio idServicio = venta.getIdServicio();
-            if (idServicio != null) {
-                idServicio.getVentaList().remove(venta);
-                idServicio = em.merge(idServicio);
             }
             em.remove(venta);
             em.getTransaction().commit();

@@ -60,6 +60,9 @@ public class Producto implements Serializable {
     @JoinColumn(name = "idRenglon", referencedColumnName = "idRenglon")
     @ManyToOne(optional = false)
     private Renglon idRenglon;
+    @JoinColumn(name = "idCuenta", referencedColumnName = "idCuenta")
+    @ManyToOne(optional = false)
+    private Cuenta idCuenta;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProducto")
     private List<Kardex> kardexList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProducto")
@@ -149,6 +152,14 @@ public class Producto implements Serializable {
 
     public void setIdRenglon(Renglon idRenglon) {
         this.idRenglon = idRenglon;
+    }
+
+    public Cuenta getIdCuenta() {
+        return idCuenta;
+    }
+
+    public void setIdCuenta(Cuenta idCuenta) {
+        this.idCuenta = idCuenta;
     }
 
     @XmlTransient

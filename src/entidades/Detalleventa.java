@@ -28,7 +28,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Detalleventa.findAll", query = "SELECT d FROM Detalleventa d"),
     @NamedQuery(name = "Detalleventa.findByIdDetalleVenta", query = "SELECT d FROM Detalleventa d WHERE d.idDetalleVenta = :idDetalleVenta"),
-    @NamedQuery(name = "Detalleventa.findByCantidad", query = "SELECT d FROM Detalleventa d WHERE d.cantidad = :cantidad"),
+    @NamedQuery(name = "Detalleventa.findByCantidadSolicitada", query = "SELECT d FROM Detalleventa d WHERE d.cantidadSolicitada = :cantidadSolicitada"),
+    @NamedQuery(name = "Detalleventa.findByCantidadEntregada", query = "SELECT d FROM Detalleventa d WHERE d.cantidadEntregada = :cantidadEntregada"),
     @NamedQuery(name = "Detalleventa.findByPrecio", query = "SELECT d FROM Detalleventa d WHERE d.precio = :precio"),
     @NamedQuery(name = "Detalleventa.findBySubtotal", query = "SELECT d FROM Detalleventa d WHERE d.subtotal = :subtotal")})
 public class Detalleventa implements Serializable {
@@ -39,7 +40,9 @@ public class Detalleventa implements Serializable {
     @Basic(optional = false)
     private Integer idDetalleVenta;
     @Basic(optional = false)
-    private int cantidad;
+    private int cantidadSolicitada;
+    @Basic(optional = false)
+    private int cantidadEntregada;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     private Double precio;
     private Double subtotal;
@@ -57,9 +60,10 @@ public class Detalleventa implements Serializable {
         this.idDetalleVenta = idDetalleVenta;
     }
 
-    public Detalleventa(Integer idDetalleVenta, int cantidad) {
+    public Detalleventa(Integer idDetalleVenta, int cantidadSolicitada, int cantidadEntregada) {
         this.idDetalleVenta = idDetalleVenta;
-        this.cantidad = cantidad;
+        this.cantidadSolicitada = cantidadSolicitada;
+        this.cantidadEntregada = cantidadEntregada;
     }
 
     public Integer getIdDetalleVenta() {
@@ -70,12 +74,20 @@ public class Detalleventa implements Serializable {
         this.idDetalleVenta = idDetalleVenta;
     }
 
-    public int getCantidad() {
-        return cantidad;
+    public int getCantidadSolicitada() {
+        return cantidadSolicitada;
     }
 
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
+    public void setCantidadSolicitada(int cantidadSolicitada) {
+        this.cantidadSolicitada = cantidadSolicitada;
+    }
+
+    public int getCantidadEntregada() {
+        return cantidadEntregada;
+    }
+
+    public void setCantidadEntregada(int cantidadEntregada) {
+        this.cantidadEntregada = cantidadEntregada;
     }
 
     public Double getPrecio() {

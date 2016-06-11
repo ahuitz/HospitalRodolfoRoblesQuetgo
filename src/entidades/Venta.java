@@ -37,7 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Venta.findByIdVenta", query = "SELECT v FROM Venta v WHERE v.idVenta = :idVenta"),
     @NamedQuery(name = "Venta.findByNoRequisicion", query = "SELECT v FROM Venta v WHERE v.noRequisicion = :noRequisicion"),
     @NamedQuery(name = "Venta.findByFecha", query = "SELECT v FROM Venta v WHERE v.fecha = :fecha"),
-    @NamedQuery(name = "Venta.findByTotal", query = "SELECT v FROM Venta v WHERE v.total = :total")})
+    @NamedQuery(name = "Venta.findByTotal", query = "SELECT v FROM Venta v WHERE v.total = :total"),
+    @NamedQuery(name = "Venta.findByIdServicio", query = "SELECT v FROM Venta v WHERE v.idServicio = :idServicio")})
 public class Venta implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,15 +53,20 @@ public class Venta implements Serializable {
     private Date fecha;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     private Double total;
-    @JoinColumn(name = "idPersona", referencedColumnName = "idPersona")
+    @Basic(optional = false)
+    private int idServicio;
+    @JoinColumn(name = "idJefeServicio", referencedColumnName = "idPersona")
     @ManyToOne(optional = false)
-    private Persona idPersona;
+    private Persona idJefeServicio;
+    @JoinColumn(name = "idEntregadoPor", referencedColumnName = "idPersona")
+    @ManyToOne(optional = false)
+    private Persona idEntregadoPor;
+    @JoinColumn(name = "idRecibidoPor", referencedColumnName = "idPersona")
+    @ManyToOne(optional = false)
+    private Persona idRecibidoPor;
     @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario")
     @ManyToOne(optional = false)
     private Usuario idUsuario;
-    @JoinColumn(name = "idServicio", referencedColumnName = "idServicio")
-    @ManyToOne(optional = false)
-    private Servicio idServicio;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idVenta")
     private List<Detalleventa> detalleventaList;
 
@@ -71,10 +77,11 @@ public class Venta implements Serializable {
         this.idVenta = idVenta;
     }
 
-    public Venta(Integer idVenta, int noRequisicion, Date fecha) {
+    public Venta(Integer idVenta, int noRequisicion, Date fecha, int idServicio) {
         this.idVenta = idVenta;
         this.noRequisicion = noRequisicion;
         this.fecha = fecha;
+        this.idServicio = idServicio;
     }
 
     public Integer getIdVenta() {
@@ -109,12 +116,36 @@ public class Venta implements Serializable {
         this.total = total;
     }
 
-    public Persona getIdPersona() {
-        return idPersona;
+    public int getIdServicio() {
+        return idServicio;
     }
 
-    public void setIdPersona(Persona idPersona) {
-        this.idPersona = idPersona;
+    public void setIdServicio(int idServicio) {
+        this.idServicio = idServicio;
+    }
+
+    public Persona getIdJefeServicio() {
+        return idJefeServicio;
+    }
+
+    public void setIdJefeServicio(Persona idJefeServicio) {
+        this.idJefeServicio = idJefeServicio;
+    }
+
+    public Persona getIdEntregadoPor() {
+        return idEntregadoPor;
+    }
+
+    public void setIdEntregadoPor(Persona idEntregadoPor) {
+        this.idEntregadoPor = idEntregadoPor;
+    }
+
+    public Persona getIdRecibidoPor() {
+        return idRecibidoPor;
+    }
+
+    public void setIdRecibidoPor(Persona idRecibidoPor) {
+        this.idRecibidoPor = idRecibidoPor;
     }
 
     public Usuario getIdUsuario() {
@@ -123,14 +154,6 @@ public class Venta implements Serializable {
 
     public void setIdUsuario(Usuario idUsuario) {
         this.idUsuario = idUsuario;
-    }
-
-    public Servicio getIdServicio() {
-        return idServicio;
-    }
-
-    public void setIdServicio(Servicio idServicio) {
-        this.idServicio = idServicio;
     }
 
     @XmlTransient
