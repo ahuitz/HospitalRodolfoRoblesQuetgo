@@ -5,6 +5,7 @@
  */
 package modelos;
 
+import conexion.Conexion;
 import controladores.DetalleventaJpaController;
 import controladores.PersonaJpaController;
 import controladores.VentaJpaController;
@@ -23,22 +24,38 @@ public class CVenta extends COperacion {
     private PersonaJpaController controladorPersona;
     private DetalleventaJpaController controladorDetalleVenta;
     private Departamento controladorDepartamento;
-    public ArrayList<Producto> productos;
+    public ArrayList<CProducto> productos;
     public Venta venta;
 
-    public void crearCliente() {
+    public CVenta() {
+        //Inicializar constructores
+            controladorVenta = new VentaJpaController(Conexion.getConexion().getEmf());
+        //Crear venta
+            venta = new Venta();
+        //Inicializar lista de productos.
+            productos = new ArrayList<>();
+    }
+    
+    public void crearPersona() {
+        //Recibe Persona/datos de persona y la almacena en base de datos.
     }
 
     public void crearDepartamento() {
     }
 
     public void agregarProducto(CProducto producto) {
+        productos.add(producto);
     }
 
     public void quitarProducto(int posicion) {
+        productos.remove(posicion);
     }
 
     public Boolean finalizarVenta() {
+        //Guardar venta en la base de datos
+        controladorVenta.create(venta);
+        //Recorrer lista de productos y guardar cada objeto como DetalleVenta en base de datos.
+        //Retornar verdadero/falso si la venta se hizo exitosamente o no.
         return null;
     }
 
