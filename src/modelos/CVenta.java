@@ -28,7 +28,7 @@ public class CVenta extends COperacion {
     public Venta venta;
 
     public CVenta() {
-        //Inicializar constructores
+        //Inicializar controladores
             controladorVenta = new VentaJpaController(Conexion.getConexion().getEmf());
         //Crear venta
             venta = new Venta();
