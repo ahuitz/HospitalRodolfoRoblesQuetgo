@@ -141,6 +141,11 @@ public class Contenedor extends javax.swing.JFrame {
         jMenuItem3.setFont(new java.awt.Font("Calibri Light", 0, 20)); // NOI18N
         jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/departamento24.png"))); // NOI18N
         jMenuItem3.setText("Departamentos");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem3);
 
         jMenuItem4.setFont(new java.awt.Font("Calibri Light", 0, 20)); // NOI18N
@@ -230,6 +235,13 @@ public class Contenedor extends javax.swing.JFrame {
         this.jDesktopPane1.add(Vpro);
         Vpro.show();
     }//GEN-LAST:event_jMenu6MouseClicked
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        Usuario Vus=new Usuario();
+        this.jDesktopPane1.add(Vus);
+        Vus.show();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments

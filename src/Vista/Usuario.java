@@ -48,6 +48,9 @@ public class Usuario extends javax.swing.JInternalFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
 
+        setClosable(true);
+        setIconifiable(true);
+
         jLabel1.setFont(new java.awt.Font("Calibri Light", 0, 20)); // NOI18N
         jLabel1.setText("Nombre");
 
