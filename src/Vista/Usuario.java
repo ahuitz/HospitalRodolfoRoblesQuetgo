@@ -5,6 +5,17 @@
  */
 package Vista;
 
+import conexion.Conexion;
+import controladores.DepartamentoJpaController;
+import controladores.PersonaJpaController;
+import controladores.VentaJpaController;
+import entidades.Departamento;
+import entidades.Persona;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,10 +27,18 @@ public class Usuario extends javax.swing.JInternalFrame {
     /**
      * Creates new form Usuario
      */
+           PersonaJpaController PER;
+           Persona per = new Persona();
+           DepartamentoJpaController DEPART;
+           Departamento dep = new Departamento();
+           String de;
     public Usuario() {
         initComponents();
-    }
-
+           //int agregar =  DEPART.findDepartamentoEntities(jComboBox1.getSelectedItem().toString());
+                     
+           }
+    
+           
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -63,6 +82,11 @@ public class Usuario extends javax.swing.JInternalFrame {
         jLabel3.setText("Dirección");
 
         jComboBox1.setFont(new java.awt.Font("Calibri Light", 0, 20)); // NOI18N
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/page-add-icon16.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -89,6 +113,11 @@ public class Usuario extends javax.swing.JInternalFrame {
         jTextField5.setFont(new java.awt.Font("Calibri Light", 0, 20)); // NOI18N
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ok48.png"))); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/error48.png"))); // NOI18N
 
@@ -200,8 +229,28 @@ public class Usuario extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showInputDialog(this, "Departamento","Departamento",1,null,null,"Enfermería");
+         de= (String) JOptionPane.showInputDialog(this, "Departamento","Departamento");
+        dep.setDepartamento(de);
+        DEPART  = new DepartamentoJpaController(Conexion.getConexion("yes123","yes123").getEmf());
+        DEPART.create(dep);
+                 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        per.setNombre(jTextField1.getText());
+        per.setDireccion(jTextField2.getText());
+        per.setTelefono(jTextField3.getText());
+        per.setIdDepartamento(dep);
+        PER  = new PersonaJpaController(Conexion.getConexion("yes123","yes123").getEmf());
+        PER.create(per);
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+        //String consulta = "SELECT Departamento FROM Departamento";
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

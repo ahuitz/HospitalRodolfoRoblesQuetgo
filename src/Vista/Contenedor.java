@@ -82,6 +82,11 @@ public class Contenedor extends javax.swing.JFrame {
 
         jMenuItem9.setFont(new java.awt.Font("Calibri Light", 0, 20)); // NOI18N
         jMenuItem9.setText("Usuario");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem9);
 
         jMenuItem6.setFont(new java.awt.Font("Calibri Light", 0, 20)); // NOI18N
@@ -242,6 +247,10 @@ public class Contenedor extends javax.swing.JFrame {
         this.jDesktopPane1.add(Vus);
         Vus.show();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     /**
      * @param args the command line arguments

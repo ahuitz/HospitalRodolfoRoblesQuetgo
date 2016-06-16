@@ -1,6 +1,7 @@
 package conexion;
 
 import entidades.Usuario;
+import java.sql.Statement;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
@@ -47,7 +48,8 @@ public class Conexion {
                 JOptionPane.showMessageDialog(null, "Usuario y/o contraseña inválidos.", "", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (Exception ex) {
-            emf=null;
+            emf=null;            emf = Persistence.createEntityManagerFactory("HospitalRoblesPU");
+
             JOptionPane.showMessageDialog(null, "Imposible establecer conexión con el servidor.\n\rRevise su conexión e intentelo de nuevo.", "", JOptionPane.INFORMATION_MESSAGE);
         }
     }
@@ -69,4 +71,6 @@ public class Conexion {
     public EntityManagerFactory getEmf() {
         return emf;
     }
+
+
 }

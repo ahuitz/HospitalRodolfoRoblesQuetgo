@@ -170,5 +170,12 @@ public class Persona implements Serializable {
     public String toString() {
         return "entidades.Persona[ idPersona=" + idPersona + " ]";
     }
+
+    public Persona( String nombre, String direccion, String telefono) {
+       
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.telefono = telefono;
+    }
     
 }

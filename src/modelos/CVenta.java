@@ -10,7 +10,9 @@ import controladores.DetalleventaJpaController;
 import controladores.PersonaJpaController;
 import controladores.VentaJpaController;
 import entidades.Departamento;
+import entidades.Persona;
 import entidades.Producto;
+import static entidades.Producto_.producto;
 import entidades.Venta;
 import java.util.ArrayList;
 
@@ -26,21 +28,21 @@ public class CVenta extends COperacion {
     private Departamento controladorDepartamento;
     public ArrayList<CProducto> productos;
     public Venta venta;
-
-    public CVenta() {
-        //Inicializar controladores
-            controladorVenta = new VentaJpaController(Conexion.getConexion().getEmf());
-        //Crear venta
-            venta = new Venta();
-        //Inicializar lista de productos.
-            productos = new ArrayList<>();
+    public Persona persona;
+   public CVenta() {
+       
+           controladorVenta = new VentaJpaController(Conexion.getConexion().getEmf());
+           venta = new Venta();
+        
     }
     
     public void crearPersona() {
         //Recibe Persona/datos de persona y la almacena en base de datos.
+        controladorPersona.create(persona);
     }
 
     public void crearDepartamento() {
+        
     }
 
     public void agregarProducto(CProducto producto) {
@@ -53,9 +55,14 @@ public class CVenta extends COperacion {
 
     public Boolean finalizarVenta() {
         //Guardar venta en la base de datos
+        productos = new ArrayList<>();
         controladorVenta.create(venta);
         //Recorrer lista de productos y guardar cada objeto como DetalleVenta en base de datos.
         //Retornar verdadero/falso si la venta se hizo exitosamente o no.
+        for (CProducto nomProd:productos){
+            
+            
+           }
         return null;
     }
 
