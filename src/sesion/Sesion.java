@@ -11,11 +11,11 @@ import java.io.Serializable;
 
 /**
  *
- * @author kevin
+ * @author Cristian Flores <thecris.danny@gmail.com>
  */
 public class Sesion implements Serializable{
-    private Usuario usuario;
-    private Persona persona;
+    private Usuario usuario = null;
+    private Persona persona = null;
     private boolean activa;
     
     public Sesion() {

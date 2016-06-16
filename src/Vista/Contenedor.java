@@ -86,7 +86,7 @@ public class Contenedor extends javax.swing.JFrame {
 
         jMenuItem6.setFont(new java.awt.Font("Calibri Light", 0, 20)); // NOI18N
         jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Actions-exit-24.png"))); // NOI18N
-        jMenuItem6.setText("Cerrar Sesión");
+        jMenuItem6.setText("Iniciar sesion");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem6ActionPerformed(evt);
@@ -208,20 +208,20 @@ public class Contenedor extends javax.swing.JFrame {
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // TODO add your handling code here:
-        if (jMenuItem9.getText().equals("Iniciar sesion")){
+        if (jMenuItem6.getText().equals("Iniciar sesion")){
             InicioSesion inicioSesion = new InicioSesion();
             this.jDesktopPane1.add(inicioSesion);       
             inicioSesion.show();
             Sesion_Administrador sesion = new Sesion_Administrador();
             if (sesion.isActiva()){
                 jMenuItem9.setText(sesion.getUsuario().getUsuario());
-                jMenuItem9.setText("Cerrar sesion");
+                jMenuItem6.setText("Cerrar sesion");
             }
         }else{
             Sesion_Administrador sesion = new Sesion_Administrador();
             sesion.cerrarSesion();
             jMenuItem9.setText("Invitado");
-            jMenuItem9.setText("Iniciar sesion");
+            jMenuItem6.setText("Iniciar sesion");
         }
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
