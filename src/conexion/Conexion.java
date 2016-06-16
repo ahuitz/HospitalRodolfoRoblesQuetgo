@@ -36,7 +36,7 @@ public class Conexion {
     private Conexion(String usuario, String contrasenia) {
         try{
             emf = Persistence.createEntityManagerFactory("HospitalRoblesPU");
-            Query q = emf.createEntityManager().createNamedQuery("Usuario.findByUsuarioAndContrasenia");
+            /*Query q = emf.createEntityManager().createNamedQuery("Usuario.findByUsuarioAndContrasenia");
             q.setParameter("usuario", usuario);
             q.setParameter("contrasenia", contrasenia);
             try{
@@ -46,7 +46,7 @@ public class Conexion {
             } catch (NoResultException ex) {
                 idUsuario=0;
                 JOptionPane.showMessageDialog(null, "Usuario y/o contraseña inválidos.", "", JOptionPane.INFORMATION_MESSAGE);
-            }
+            }*/
         } catch (Exception ex) {
             emf=null;            emf = Persistence.createEntityManagerFactory("HospitalRoblesPU");
 
