@@ -16,6 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Query;
 import javax.swing.JOptionPane;
 
 /**
@@ -34,9 +35,18 @@ public class Usuario extends javax.swing.JInternalFrame {
            String de;
     public Usuario() {
         initComponents();
-           //int agregar =  DEPART.findDepartamentoEntities(jComboBox1.getSelectedItem().toString());
-                     
-           }
+//       
+            Conexion con = Conexion.getConexion("yes123","yes123");
+            Query q = con.getEmf().createEntityManager().createNamedQuery("Departamento.findAll");
+            
+            List <Departamento>depa;
+               depa = (List <Departamento>) q.getResultList();
+            for(Departamento dep:depa){
+            jComboBox1.addItem(dep.getDepartamento());
+        }
+            
+        
+    }
     
            
     /**
@@ -233,7 +243,8 @@ public class Usuario extends javax.swing.JInternalFrame {
         dep.setDepartamento(de);
         DEPART  = new DepartamentoJpaController(Conexion.getConexion("yes123","yes123").getEmf());
         DEPART.create(dep);
-                 
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -244,6 +255,9 @@ public class Usuario extends javax.swing.JInternalFrame {
         per.setIdDepartamento(dep);
         PER  = new PersonaJpaController(Conexion.getConexion("yes123","yes123").getEmf());
         PER.create(per);
+        
+            
+       
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
