@@ -81,6 +81,23 @@ public class Producto implements Serializable {
         this.precio = precio;
     }
 
+    public Producto(Integer idProducto, String producto, String descripcion, double precio, Integer codigo, Double existencia, List<Detalleventa> detalleventaList, Presentacion idPresentacion, Renglon idRenglon, Cuenta idCuenta, List<Kardex> kardexList, List<Detallecompra> detallecompraList) {
+        this.idProducto = idProducto;
+        this.producto = producto;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.codigo = codigo;
+        this.existencia = existencia;
+        this.detalleventaList = detalleventaList;
+        this.idPresentacion = idPresentacion;
+        this.idRenglon = idRenglon;
+        this.idCuenta = idCuenta;
+        this.kardexList = kardexList;
+        this.detallecompraList = detallecompraList;
+    }
+    
+    
+
     public Integer getIdProducto() {
         return idProducto;
     }

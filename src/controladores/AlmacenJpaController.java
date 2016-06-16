@@ -200,4 +200,12 @@ public class AlmacenJpaController implements Serializable {
         }
     }
     
+    public Almacen findAlmacen(String almacen) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(Almacen.class, almacen);
+        } finally {
+            em.close();
+        }
+    }
 }

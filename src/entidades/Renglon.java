@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Renglon.findAll", query = "SELECT r FROM Renglon r"),
     @NamedQuery(name = "Renglon.findByIdRenglon", query = "SELECT r FROM Renglon r WHERE r.idRenglon = :idRenglon"),
-    @NamedQuery(name = "Renglon.findByNoRenglon", query = "SELECT r FROM Renglon r WHERE r.noRenglon = :noRenglon"),
+    @NamedQuery(name = "Renglon.findByNoRenglon", query = "SELECT r FROM Renglon r WHERE r.noRenglon = :noRenglon"),    
     @NamedQuery(name = "Renglon.findByRenglon", query = "SELECT r FROM Renglon r WHERE r.renglon = :renglon")})
 public class Renglon implements Serializable {
 

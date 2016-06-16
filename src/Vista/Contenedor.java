@@ -20,6 +20,7 @@ public class Contenedor extends javax.swing.JFrame {
      */
     public Contenedor() {
         initComponents();
+        this.setExtendedState(MAXIMIZED_BOTH);
     }
     @Override
     public Image getIconImage() {
@@ -62,17 +63,19 @@ public class Contenedor extends javax.swing.JFrame {
         setIconImage(getIconImage());
         setIconImages(getIconImages());
         setLocation(new java.awt.Point(100, 30));
-        setPreferredSize(new java.awt.Dimension(1020, 650));
+        setPreferredSize(new java.awt.Dimension(500, 500));
+
+        jDesktopPane1.setPreferredSize(new java.awt.Dimension(500, 500));
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, Short.MAX_VALUE, Short.MAX_VALUE)
+            .addGap(0, 652, Short.MAX_VALUE)
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, Short.MAX_VALUE, Short.MAX_VALUE)
+            .addGap(0, 371, Short.MAX_VALUE)
         );
 
         jMenuBar1.setFont(new java.awt.Font("Calibri Light", 0, 20)); // NOI18N
@@ -82,6 +85,11 @@ public class Contenedor extends javax.swing.JFrame {
 
         jMenuItem9.setFont(new java.awt.Font("Calibri Light", 0, 20)); // NOI18N
         jMenuItem9.setText("Usuario");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem9);
 
         jMenuItem6.setFont(new java.awt.Font("Calibri Light", 0, 20)); // NOI18N
@@ -175,6 +183,11 @@ public class Contenedor extends javax.swing.JFrame {
         jMenuItem8.setFont(new java.awt.Font("Calibri Light", 0, 20)); // NOI18N
         jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/reportProducto24.png"))); // NOI18N
         jMenuItem8.setText("Productos");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem8);
 
         jMenuBar1.add(jMenu5);
@@ -186,14 +199,16 @@ public class Contenedor extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1939, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 648, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -242,6 +257,16 @@ public class Contenedor extends javax.swing.JFrame {
         this.jDesktopPane1.add(Vus);
         Vus.show();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     /**
      * @param args the command line arguments

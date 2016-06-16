@@ -200,4 +200,13 @@ public class PresentacionJpaController implements Serializable {
         }
     }
     
+    public Presentacion findPresentacion(String presentacion) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(Presentacion.class, presentacion);
+        } finally {
+            em.close();
+        }
+    }
+    
 }
