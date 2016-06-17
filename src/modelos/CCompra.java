@@ -7,10 +7,12 @@ package modelos;
 
 import ModeloTablas.ModeloProducto;
 import ModeloTablas.ModeloProductoC;
+import ModeloTablas.ModeloProveedor;
 import conexion.Conexion;
 import controladores.AlmacenJpaController;
 import controladores.CompraJpaController;
 import controladores.CuentaJpaController;
+import controladores.DetallecompraJpaController;
 import controladores.PresentacionJpaController;
 import controladores.ProductoJpaController;
 import controladores.ProveedorJpaController;
@@ -34,8 +36,11 @@ public class CCompra extends COperacion {
     private AlmacenJpaController controladorAlmacen;
     private RenglonJpaController controladorRenglon;
     private CuentaJpaController controladorCuenta;
+    private DetallecompraJpaController controladordetalle;
     public ArrayList<CProducto> productos;
     public Compra compra;
+    public Proveedor proveedor;
+    double Total;
 
     public CCompra(){
         this.controladorPresentacion = new PresentacionJpaController(Conexion.getConexion().getEmf());
@@ -45,8 +50,12 @@ public class CCompra extends COperacion {
         this.controladorAlmacen = new AlmacenJpaController(Conexion.getConexion().getEmf());
         this.controladorRenglon = new RenglonJpaController(Conexion.getConexion().getEmf());
         this.controladorCuenta = new CuentaJpaController(Conexion.getConexion().getEmf());
+        this.controladordetalle = new DetallecompraJpaController(Conexion.getConexion().getEmf());
+        
         this.productos =  new ArrayList<>();
         this.compra = new Compra();
+        proveedor=new Proveedor();
+        Total=0;
     }
     
 
@@ -71,12 +80,18 @@ public class CCompra extends COperacion {
     public void crearCuenta() {
     }
 
+    public void agregarProveedor(Proveedor proveedor){
+        this.proveedor=proveedor;
+        
+    }
     public void agregarProducto(Producto producto,int n) {
         
         productos.add(new CProducto(producto,n));
+        Total=Total+producto.getPrecio()*n;
     }
 
     public void quitarProducto(int posicion) {
+        productos.remove(posicion);
     }
     public TableModel getProductos(){
         ModeloProductoC modelo= new ModeloProductoC(productos);
@@ -98,23 +113,44 @@ public class CCompra extends COperacion {
         return modelo;
     }
 
-    public Proveedor buscarProveedor(int id){
-        return controladorProveedor.findProveedor(id);
+    public TableModel buscarProveedor(){
+        
+        return new ModeloProveedor(controladorProveedor.findProveedorEntities());
     }
-    public List<Proveedor> buscarProveedor(String Nombre){
+    public TableModel buscarProveedor(String Nombre){
         Query q = Conexion.getConexion().getEmf().createEntityManager().createNamedQuery("Proveedor.findByNombre");
-        q.setParameter("Nombre", "%"+Nombre);
-        return q.getResultList();
+        q.setParameter("nombre", "%"+Nombre+"%");
+        return new ModeloProveedor(q.getResultList());
+    }
+    public TableModel buscarProveedor(int nit){
+        Query q = Conexion.getConexion().getEmf().createEntityManager().createNamedQuery("Proveedor.findByNit");
+        q.setParameter("nit", nit);
+        return new ModeloProveedor(q.getResultList());
     }
 
     
-    public Boolean finalizarCompra() {
+    public Boolean finalizarCompra(Compra compra) {
+        compra.setIdUsuario(new Usuario(Conexion.getConexion().getIdUsuario()));
+        compra.setIdProveedor(proveedor);
+        
+        controladorCompra.create(compra);
+        int id=compra.getIdCompra();
+        for(CProducto p:productos){
+            Detallecompra d= new Detallecompra();
+            d.setCantidad(p.cantidad);
+            d.setIdProducto(p.p);
+            d.setSubtotal(p.cantidad*p.precio);
+            controladordetalle.create(d);
+            
+            
+        }
+        
         return null;
     }
 
     @Override
     public double getTotal() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return Total;
     }
 
     public PresentacionJpaController getControladorPresentacion() {
