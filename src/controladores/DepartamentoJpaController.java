@@ -253,12 +253,5 @@ public class DepartamentoJpaController implements Serializable {
             em.close();
         }
     }
-     public Departamento findDepartamento(String departamento) {
-        EntityManager em = getEntityManager();
-        try {
-            return em.find(Departamento.class, departamento);
-        } finally {
-            em.close();
-        }
-    }
+    
 }
