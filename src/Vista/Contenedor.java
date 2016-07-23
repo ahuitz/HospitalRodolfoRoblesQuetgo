@@ -246,7 +246,7 @@ public class Contenedor extends javax.swing.JFrame {
 
     private void jMenu6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu6MouseClicked
         // TODO add your handling code here:
-        Producto Vpro=new Producto();
+        Productos Vpro=new Productos();
         this.jDesktopPane1.add(Vpro);
         Vpro.show();
     }//GEN-LAST:event_jMenu6MouseClicked
