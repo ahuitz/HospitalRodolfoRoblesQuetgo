@@ -6,26 +6,20 @@
 package Vista;
 
 import conexion.Conexion;
-import entidades.Persona;
-import static entidades.Persona_.nombre;
-import modelos.CVenta;
-import modelos.FabricaOperacion;
 
 /**
  *
- * @author Pablo Lopez <panlopezv@gmail.com>
+ * @author modm_
  */
-public class PruebaConexion {
+public class Prueba {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        
-        Conexion c = Conexion.getConexion("yes123", "yes123");
+        Conexion c = Conexion.getConexion("root", "root");
         c.cerrarConexion();
-         }
-    
+    }
     
 }

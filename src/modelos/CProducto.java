@@ -5,6 +5,8 @@
  */
 package modelos;
 
+import entidades.Producto;
+
 /**
  *
  * @author Pablo Lopez <panlopezv@gmail.com>
@@ -15,8 +17,13 @@ public class CProducto {
     public String nombre;
     public int cantidad;
     public double precio;
+    public Producto p;
 
     public CProducto() {
+    }
+     public CProducto(Producto p,int n) {
+         this.p=p;
+         this.cantidad=n;
     }
 
     public double getSubtotal() {
