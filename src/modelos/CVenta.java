@@ -12,7 +12,6 @@ import controladores.VentaJpaController;
 import entidades.Departamento;
 import entidades.Persona;
 import entidades.Producto;
-import static entidades.Producto_.producto;
 import entidades.Venta;
 import java.util.ArrayList;
 

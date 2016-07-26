@@ -7,7 +7,6 @@ package Vista;
 
 import conexion.Conexion;
 import entidades.Persona;
-import static entidades.Persona_.nombre;
 import modelos.CVenta;
 import modelos.FabricaOperacion;
 

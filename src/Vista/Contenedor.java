@@ -273,19 +273,15 @@ public class Contenedor extends javax.swing.JFrame {
         Vus.show();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
-<<<<<<< HEAD
+
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         // TODO add your handling code here:
         
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        // TODO add your handling code here:
-        
-=======
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
         // TODO add your handling code here:
->>>>>>> df23e62c8dc6e051699f5e85007cea295e2598a1
+
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     /**

@@ -1,26 +1,25 @@
-<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="HospitalRoblesPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>entidades.Servicio</class>
-    <class>entidades.Permisousuario</class>
     <class>entidades.Almacen</class>
-    <class>entidades.Proveedor</class>
-    <class>entidades.Departamento</class>
     <class>entidades.Bitacora</class>
     <class>entidades.Compra</class>
-    <class>entidades.Renglon</class>
+    <class>entidades.Cuenta</class>
+    <class>entidades.Departamento</class>
+    <class>entidades.Detallecompra</class>
+    <class>entidades.Detalleventa</class>
+    <class>entidades.Kardex</class>
+    <class>entidades.Permiso</class>
+    <class>entidades.Permisousuario</class>
     <class>entidades.Persona</class>
     <class>entidades.Presentacion</class>
-    <class>entidades.Detallecompra</class>
-    <class>entidades.Kardex</class>
-    <class>entidades.Detalleventa</class>
-    <class>entidades.Venta</class>
-    <class>entidades.Permiso</class>
     <class>entidades.Producto</class>
+    <class>entidades.Proveedor</class>
+    <class>entidades.Renglon</class>
+    <class>entidades.Servicio</class>
     <class>entidades.Usuario</class>
-    <class>entidades.Cuenta</class>
+    <class>entidades.Venta</class>   
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/hrobles?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
@@ -29,36 +28,3 @@
     </properties>
   </persistence-unit>
 </persistence>
-=======
-<?xml version="1.0" encoding="UTF-8"?>
-<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-  <persistence-unit name="HospitalRoblesPU" transaction-type="RESOURCE_LOCAL">
-    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>entidades.Almacen</class>
-    <class>entidades.Bitacora</class>
-    <class>entidades.Compra</class>
-    <class>entidades.Cuenta</class>
-    <class>entidades.Departamento</class>
-    <class>entidades.Detallecompra</class>
-    <class>entidades.Detalleventa</class>
-    <class>entidades.Kardex</class>
-    <class>entidades.Permiso</class>
-    <class>entidades.Permisousuario</class>
-    <class>entidades.Persona</class>
-    <class>entidades.Presentacion</class>
-    <class>entidades.Producto</class>
-    <class>entidades.Proveedor</class>
-    <class>entidades.Renglon</class>
-    <class>entidades.Servicio</class>
-    <class>entidades.Usuario</class>
-    <class>entidades.Venta</class>
-    <validation-mode>NONE</validation-mode>
-    <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/hrobles?zeroDateTimeBehavior=convertToNull"/>
-      <property name="javax.persistence.jdbc.user" value="root"/>
-      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="root"/>
-    </properties>
-  </persistence-unit>
-</persistence>
->>>>>>> df23e62c8dc6e051699f5e85007cea295e2598a1
