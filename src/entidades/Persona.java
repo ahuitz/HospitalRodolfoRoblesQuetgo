@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,10 +25,10 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Pablo Lopez <panlopezv@gmail.com>
+ * @author Rosario
  */
 @Entity
-@Table(catalog = "hrobles", schema = "")
+@Table(name = "persona")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Persona.findAll", query = "SELECT p FROM Persona p"),
@@ -41,19 +42,23 @@ public class Persona implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @Column(name = "idPersona")
     private Integer idPersona;
     @Basic(optional = false)
+    @Column(name = "Nombre")
     private String nombre;
+    @Column(name = "Direccion")
     private String direccion;
+    @Column(name = "Telefono")
     private String telefono;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idJefeServicio")
     private List<Venta> ventaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEntregadoPor")
+    @OneToMany(mappedBy = "idEntregadoPor")
     private List<Venta> ventaList1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRecibidoPor")
     private List<Venta> ventaList2;
     @JoinColumn(name = "idDepartamento", referencedColumnName = "idDepartamento")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Departamento idDepartamento;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPersona")
     private List<Usuario> usuarioList;
@@ -169,13 +174,6 @@ public class Persona implements Serializable {
     @Override
     public String toString() {
         return "entidades.Persona[ idPersona=" + idPersona + " ]";
-    }
-
-    public Persona( String nombre, String direccion, String telefono) {
-       
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.telefono = telefono;
     }
     
 }

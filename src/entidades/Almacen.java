@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,10 +23,10 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Pablo Lopez <panlopezv@gmail.com>
+ * @author Rosario
  */
 @Entity
-@Table(catalog = "hrobles", schema = "")
+@Table(name = "almacen")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Almacen.findAll", query = "SELECT a FROM Almacen a"),
@@ -37,8 +38,10 @@ public class Almacen implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @Column(name = "idAlmacen")
     private Integer idAlmacen;
     @Basic(optional = false)
+    @Column(name = "Nombre")
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAlmacen")
     private List<Renglon> renglonList;

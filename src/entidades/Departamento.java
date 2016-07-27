@@ -8,7 +8,7 @@ package entidades;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,10 +22,10 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Pablo Lopez <panlopezv@gmail.com>
+ * @author Rosario
  */
 @Entity
-@Table(catalog = "hrobles", schema = "")
+@Table(name = "departamento")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Departamento.findAll", query = "SELECT d FROM Departamento d"),
@@ -37,13 +37,13 @@ public class Departamento implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @Column(name = "idDepartamento")
     private Integer idDepartamento;
     @Basic(optional = false)
+    @Column(name = "Departamento")
     private String departamento;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDepartamento")
+    @OneToMany(mappedBy = "idDepartamento")
     private List<Persona> personaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDepartamento")
-    private List<Kardex> kardexList;
 
     public Departamento() {
     }
@@ -80,15 +80,6 @@ public class Departamento implements Serializable {
 
     public void setPersonaList(List<Persona> personaList) {
         this.personaList = personaList;
-    }
-
-    @XmlTransient
-    public List<Kardex> getKardexList() {
-        return kardexList;
-    }
-
-    public void setKardexList(List<Kardex> kardexList) {
-        this.kardexList = kardexList;
     }
 
     @Override

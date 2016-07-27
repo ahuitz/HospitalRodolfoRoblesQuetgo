@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,15 +25,15 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Pablo Lopez <panlopezv@gmail.com>
+ * @author Rosario
  */
 @Entity
-@Table(catalog = "hrobles", schema = "")
+@Table(name = "renglon")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Renglon.findAll", query = "SELECT r FROM Renglon r"),
     @NamedQuery(name = "Renglon.findByIdRenglon", query = "SELECT r FROM Renglon r WHERE r.idRenglon = :idRenglon"),
-    @NamedQuery(name = "Renglon.findByNoRenglon", query = "SELECT r FROM Renglon r WHERE r.noRenglon = :noRenglon"),    
+    @NamedQuery(name = "Renglon.findByNoRenglon", query = "SELECT r FROM Renglon r WHERE r.noRenglon = :noRenglon"),
     @NamedQuery(name = "Renglon.findByRenglon", query = "SELECT r FROM Renglon r WHERE r.renglon = :renglon")})
 public class Renglon implements Serializable {
 
@@ -40,10 +41,13 @@ public class Renglon implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @Column(name = "idRenglon")
     private Integer idRenglon;
     @Basic(optional = false)
+    @Column(name = "NoRenglon")
     private int noRenglon;
     @Basic(optional = false)
+    @Column(name = "Renglon")
     private String renglon;
     @JoinColumn(name = "idAlmacen", referencedColumnName = "idAlmacen")
     @ManyToOne(optional = false)

@@ -8,6 +8,7 @@ package entidades;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,10 +24,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Pablo Lopez <panlopezv@gmail.com>
+ * @author Rosario
  */
 @Entity
-@Table(catalog = "hrobles", schema = "")
+@Table(name = "bitacora")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Bitacora.findAll", query = "SELECT b FROM Bitacora b"),
@@ -40,13 +41,17 @@ public class Bitacora implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    private Integer idBitacora;
+    @Column(name = "idBitacora")
+    private Long idBitacora;
     @Basic(optional = false)
+    @Column(name = "Fecha")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
     @Basic(optional = false)
+    @Column(name = "TablaModificada")
     private String tablaModificada;
     @Basic(optional = false)
+    @Column(name = "Descripcion")
     private String descripcion;
     @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario")
     @ManyToOne(optional = false)
@@ -55,22 +60,22 @@ public class Bitacora implements Serializable {
     public Bitacora() {
     }
 
-    public Bitacora(Integer idBitacora) {
+    public Bitacora(Long idBitacora) {
         this.idBitacora = idBitacora;
     }
 
-    public Bitacora(Integer idBitacora, Date fecha, String tablaModificada, String descripcion) {
+    public Bitacora(Long idBitacora, Date fecha, String tablaModificada, String descripcion) {
         this.idBitacora = idBitacora;
         this.fecha = fecha;
         this.tablaModificada = tablaModificada;
         this.descripcion = descripcion;
     }
 
-    public Integer getIdBitacora() {
+    public Long getIdBitacora() {
         return idBitacora;
     }
 
-    public void setIdBitacora(Integer idBitacora) {
+    public void setIdBitacora(Long idBitacora) {
         this.idBitacora = idBitacora;
     }
 

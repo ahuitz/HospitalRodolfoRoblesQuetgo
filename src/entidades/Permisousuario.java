@@ -7,6 +7,7 @@ package entidades;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,10 +21,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Pablo Lopez <panlopezv@gmail.com>
+ * @author Rosario
  */
 @Entity
-@Table(catalog = "hrobles", schema = "")
+@Table(name = "permisousuario")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Permisousuario.findAll", query = "SELECT p FROM Permisousuario p"),
@@ -34,13 +35,14 @@ public class Permisousuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @Column(name = "idPermisoUsuario")
     private Integer idPermisoUsuario;
-    @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario")
-    @ManyToOne(optional = false)
-    private Usuario idUsuario;
     @JoinColumn(name = "idPermiso", referencedColumnName = "idPermiso")
     @ManyToOne(optional = false)
     private Permiso idPermiso;
+    @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario")
+    @ManyToOne(optional = false)
+    private Usuario idUsuario;
 
     public Permisousuario() {
     }
@@ -57,20 +59,20 @@ public class Permisousuario implements Serializable {
         this.idPermisoUsuario = idPermisoUsuario;
     }
 
-    public Usuario getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(Usuario idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
     public Permiso getIdPermiso() {
         return idPermiso;
     }
 
     public void setIdPermiso(Permiso idPermiso) {
         this.idPermiso = idPermiso;
+    }
+
+    public Usuario getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Usuario idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     @Override

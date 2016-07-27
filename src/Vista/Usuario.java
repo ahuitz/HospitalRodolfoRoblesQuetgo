@@ -5,10 +5,9 @@
  */
 package Vista;
 
+import Controladores.DepartamentoJpaController;
+import Controladores.PersonaJpaController;
 import conexion.Conexion;
-import controladores.DepartamentoJpaController;
-import controladores.PersonaJpaController;
-import controladores.VentaJpaController;
 import entidades.Departamento;
 import entidades.Persona;
 import java.sql.PreparedStatement;

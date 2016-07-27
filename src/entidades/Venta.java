@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,10 +28,10 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Pablo Lopez <panlopezv@gmail.com>
+ * @author Rosario
  */
 @Entity
-@Table(catalog = "hrobles", schema = "")
+@Table(name = "venta")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Venta.findAll", query = "SELECT v FROM Venta v"),
@@ -45,21 +46,26 @@ public class Venta implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    private Integer idVenta;
+    @Column(name = "idVenta")
+    private Long idVenta;
     @Basic(optional = false)
+    @Column(name = "NoRequisicion")
     private int noRequisicion;
     @Basic(optional = false)
+    @Column(name = "Fecha")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    private Double total;
     @Basic(optional = false)
+    @Column(name = "Total")
+    private double total;
+    @Basic(optional = false)
+    @Column(name = "idServicio")
     private int idServicio;
     @JoinColumn(name = "idJefeServicio", referencedColumnName = "idPersona")
     @ManyToOne(optional = false)
     private Persona idJefeServicio;
     @JoinColumn(name = "idEntregadoPor", referencedColumnName = "idPersona")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Persona idEntregadoPor;
     @JoinColumn(name = "idRecibidoPor", referencedColumnName = "idPersona")
     @ManyToOne(optional = false)
@@ -73,22 +79,23 @@ public class Venta implements Serializable {
     public Venta() {
     }
 
-    public Venta(Integer idVenta) {
+    public Venta(Long idVenta) {
         this.idVenta = idVenta;
     }
 
-    public Venta(Integer idVenta, int noRequisicion, Date fecha, int idServicio) {
+    public Venta(Long idVenta, int noRequisicion, Date fecha, double total, int idServicio) {
         this.idVenta = idVenta;
         this.noRequisicion = noRequisicion;
         this.fecha = fecha;
+        this.total = total;
         this.idServicio = idServicio;
     }
 
-    public Integer getIdVenta() {
+    public Long getIdVenta() {
         return idVenta;
     }
 
-    public void setIdVenta(Integer idVenta) {
+    public void setIdVenta(Long idVenta) {
         this.idVenta = idVenta;
     }
 
@@ -108,11 +115,11 @@ public class Venta implements Serializable {
         this.fecha = fecha;
     }
 
-    public Double getTotal() {
+    public double getTotal() {
         return total;
     }
 
-    public void setTotal(Double total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 

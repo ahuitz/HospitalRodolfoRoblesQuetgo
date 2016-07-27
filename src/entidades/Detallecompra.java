@@ -7,6 +7,7 @@ package entidades;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,57 +21,57 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Pablo Lopez <panlopezv@gmail.com>
+ * @author Rosario
  */
 @Entity
-@Table(catalog = "hrobles", schema = "")
+@Table(name = "detallecompra")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Detallecompra.findAll", query = "SELECT d FROM Detallecompra d"),
     @NamedQuery(name = "Detallecompra.findByIdDetalleCompra", query = "SELECT d FROM Detallecompra d WHERE d.idDetalleCompra = :idDetalleCompra"),
     @NamedQuery(name = "Detallecompra.findByCantidad", query = "SELECT d FROM Detallecompra d WHERE d.cantidad = :cantidad"),
-    @NamedQuery(name = "Detallecompra.findByCosto", query = "SELECT d FROM Detallecompra d WHERE d.costo = :costo"),
     @NamedQuery(name = "Detallecompra.findBySubtotal", query = "SELECT d FROM Detallecompra d WHERE d.subtotal = :subtotal"),
-    @NamedQuery(name = "Detallecompra.findByFolioAlmacen", query = "SELECT d FROM Detallecompra d WHERE d.folioAlmacen = :folioAlmacen"),
-    @NamedQuery(name = "Detallecompra.findByFolioInventario", query = "SELECT d FROM Detallecompra d WHERE d.folioInventario = :folioInventario")})
+    @NamedQuery(name = "Detallecompra.findByFolioAlmacen", query = "SELECT d FROM Detallecompra d WHERE d.folioAlmacen = :folioAlmacen")})
 public class Detallecompra implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    private Integer idDetalleCompra;
+    @Column(name = "idDetalleCompra")
+    private Long idDetalleCompra;
     @Basic(optional = false)
+    @Column(name = "Cantidad")
     private int cantidad;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    private Double costo;
+    @Column(name = "Subtotal")
     private Double subtotal;
+    @Column(name = "FolioAlmacen")
     private String folioAlmacen;
-    private String folioInventario;
     @JoinColumn(name = "idCompra", referencedColumnName = "idCompra")
     @ManyToOne(optional = false)
     private Compra idCompra;
-    @JoinColumn(name = "idProducto", referencedColumnName = "idProducto")
+    @JoinColumn(name = "idLote", referencedColumnName = "idLote")
     @ManyToOne(optional = false)
-    private Producto idProducto;
+    private Lote idLote;
 
     public Detallecompra() {
     }
 
-    public Detallecompra(Integer idDetalleCompra) {
+    public Detallecompra(Long idDetalleCompra) {
         this.idDetalleCompra = idDetalleCompra;
     }
 
-    public Detallecompra(Integer idDetalleCompra, int cantidad) {
+    public Detallecompra(Long idDetalleCompra, int cantidad) {
         this.idDetalleCompra = idDetalleCompra;
         this.cantidad = cantidad;
     }
 
-    public Integer getIdDetalleCompra() {
+    public Long getIdDetalleCompra() {
         return idDetalleCompra;
     }
 
-    public void setIdDetalleCompra(Integer idDetalleCompra) {
+    public void setIdDetalleCompra(Long idDetalleCompra) {
         this.idDetalleCompra = idDetalleCompra;
     }
 
@@ -80,14 +81,6 @@ public class Detallecompra implements Serializable {
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
-    }
-
-    public Double getCosto() {
-        return costo;
-    }
-
-    public void setCosto(Double costo) {
-        this.costo = costo;
     }
 
     public Double getSubtotal() {
@@ -106,14 +99,6 @@ public class Detallecompra implements Serializable {
         this.folioAlmacen = folioAlmacen;
     }
 
-    public String getFolioInventario() {
-        return folioInventario;
-    }
-
-    public void setFolioInventario(String folioInventario) {
-        this.folioInventario = folioInventario;
-    }
-
     public Compra getIdCompra() {
         return idCompra;
     }
@@ -122,12 +107,12 @@ public class Detallecompra implements Serializable {
         this.idCompra = idCompra;
     }
 
-    public Producto getIdProducto() {
-        return idProducto;
+    public Lote getIdLote() {
+        return idLote;
     }
 
-    public void setIdProducto(Producto idProducto) {
-        this.idProducto = idProducto;
+    public void setIdLote(Lote idLote) {
+        this.idLote = idLote;
     }
 
     @Override

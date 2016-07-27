@@ -7,6 +7,7 @@ package entidades;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,10 +21,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Pablo Lopez <panlopezv@gmail.com>
+ * @author Rosario
  */
 @Entity
-@Table(catalog = "hrobles", schema = "")
+@Table(name = "kardex")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Kardex.findAll", query = "SELECT k FROM Kardex k"),
@@ -37,39 +38,40 @@ public class Kardex implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    private Integer idKardex;
+    @Column(name = "idKardex")
+    private Long idKardex;
     @Basic(optional = false)
+    @Column(name = "Numero")
     private int numero;
     @Basic(optional = false)
+    @Column(name = "A\u00f1o")
     private int año;
     @Basic(optional = false)
+    @Column(name = "Mes")
     private String mes;
     @JoinColumn(name = "idProducto", referencedColumnName = "idProducto")
     @ManyToOne(optional = false)
     private Producto idProducto;
-    @JoinColumn(name = "idDepartamento", referencedColumnName = "idDepartamento")
-    @ManyToOne(optional = false)
-    private Departamento idDepartamento;
 
     public Kardex() {
     }
 
-    public Kardex(Integer idKardex) {
+    public Kardex(Long idKardex) {
         this.idKardex = idKardex;
     }
 
-    public Kardex(Integer idKardex, int numero, int año, String mes) {
+    public Kardex(Long idKardex, int numero, int año, String mes) {
         this.idKardex = idKardex;
         this.numero = numero;
         this.año = año;
         this.mes = mes;
     }
 
-    public Integer getIdKardex() {
+    public Long getIdKardex() {
         return idKardex;
     }
 
-    public void setIdKardex(Integer idKardex) {
+    public void setIdKardex(Long idKardex) {
         this.idKardex = idKardex;
     }
 
@@ -103,14 +105,6 @@ public class Kardex implements Serializable {
 
     public void setIdProducto(Producto idProducto) {
         this.idProducto = idProducto;
-    }
-
-    public Departamento getIdDepartamento() {
-        return idDepartamento;
-    }
-
-    public void setIdDepartamento(Departamento idDepartamento) {
-        this.idDepartamento = idDepartamento;
     }
 
     @Override

@@ -9,11 +9,13 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -24,86 +26,64 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Pablo Lopez <panlopezv@gmail.com>
+ * @author Rosario
  */
 @Entity
-@Table(catalog = "hrobles", schema = "")
+@Table(name = "producto")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Producto.findAll", query = "SELECT p FROM Producto p"),
     @NamedQuery(name = "Producto.findByIdProducto", query = "SELECT p FROM Producto p WHERE p.idProducto = :idProducto"),
     @NamedQuery(name = "Producto.findByProducto", query = "SELECT p FROM Producto p WHERE p.producto = :producto"),
-    @NamedQuery(name = "Producto.findByDescripcion", query = "SELECT p FROM Producto p WHERE p.descripcion = :descripcion"),
-    @NamedQuery(name = "Producto.findByPrecio", query = "SELECT p FROM Producto p WHERE p.precio = :precio"),
     @NamedQuery(name = "Producto.findByCodigo", query = "SELECT p FROM Producto p WHERE p.codigo = :codigo"),
-    @NamedQuery(name = "Producto.findByExistencia", query = "SELECT p FROM Producto p WHERE p.existencia = :existencia"),
-    @NamedQuery(name = "Producto.findBybusqueda", query = "SELECT p FROM Producto p WHERE p.codigo = :busqueda or p.producto like :busquedas")})
+    @NamedQuery(name = "Producto.findByExistencia", query = "SELECT p FROM Producto p WHERE p.existencia = :existencia")})
 public class Producto implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    private Integer idProducto;
+    @Column(name = "idProducto")
+    private Long idProducto;
     @Basic(optional = false)
+    @Column(name = "Producto")
     private String producto;
+    @Lob
+    @Column(name = "Descripcion")
     private String descripcion;
-    @Basic(optional = false)
-    private double precio;
+    @Column(name = "Codigo")
     private Integer codigo;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "Existencia")
     private Double existencia;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProducto")
-    private List<Detalleventa> detalleventaList;
+    private List<Lote> loteList;
     @JoinColumn(name = "idPresentacion", referencedColumnName = "idPresentacion")
     @ManyToOne(optional = false)
     private Presentacion idPresentacion;
     @JoinColumn(name = "idRenglon", referencedColumnName = "idRenglon")
     @ManyToOne(optional = false)
     private Renglon idRenglon;
-    @JoinColumn(name = "idCuenta", referencedColumnName = "idCuenta")
-    @ManyToOne(optional = false)
-    private Cuenta idCuenta;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProducto")
     private List<Kardex> kardexList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProducto")
-    private List<Detallecompra> detallecompraList;
 
     public Producto() {
     }
 
-    public Producto(Integer idProducto) {
+    public Producto(Long idProducto) {
         this.idProducto = idProducto;
     }
 
-    public Producto(Integer idProducto, String producto, double precio) {
-        this.idProducto = idProducto;
-        this.producto = producto;
-        this.precio = precio;
-    }
-
-    public Producto(Integer idProducto, String producto, String descripcion, double precio, Integer codigo, Double existencia, List<Detalleventa> detalleventaList, Presentacion idPresentacion, Renglon idRenglon, Cuenta idCuenta, List<Kardex> kardexList, List<Detallecompra> detallecompraList) {
+    public Producto(Long idProducto, String producto) {
         this.idProducto = idProducto;
         this.producto = producto;
-        this.descripcion = descripcion;
-        this.precio = precio;
-        this.codigo = codigo;
-        this.existencia = existencia;
-        this.detalleventaList = detalleventaList;
-        this.idPresentacion = idPresentacion;
-        this.idRenglon = idRenglon;
-        this.idCuenta = idCuenta;
-        this.kardexList = kardexList;
-        this.detallecompraList = detallecompraList;
     }
-    
-    
 
-    public Integer getIdProducto() {
+    public Long getIdProducto() {
         return idProducto;
     }
 
-    public void setIdProducto(Integer idProducto) {
+    public void setIdProducto(Long idProducto) {
         this.idProducto = idProducto;
     }
 
@@ -123,14 +103,6 @@ public class Producto implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public double getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(double precio) {
-        this.precio = precio;
-    }
-
     public Integer getCodigo() {
         return codigo;
     }
@@ -148,12 +120,12 @@ public class Producto implements Serializable {
     }
 
     @XmlTransient
-    public List<Detalleventa> getDetalleventaList() {
-        return detalleventaList;
+    public List<Lote> getLoteList() {
+        return loteList;
     }
 
-    public void setDetalleventaList(List<Detalleventa> detalleventaList) {
-        this.detalleventaList = detalleventaList;
+    public void setLoteList(List<Lote> loteList) {
+        this.loteList = loteList;
     }
 
     public Presentacion getIdPresentacion() {
@@ -172,14 +144,6 @@ public class Producto implements Serializable {
         this.idRenglon = idRenglon;
     }
 
-    public Cuenta getIdCuenta() {
-        return idCuenta;
-    }
-
-    public void setIdCuenta(Cuenta idCuenta) {
-        this.idCuenta = idCuenta;
-    }
-
     @XmlTransient
     public List<Kardex> getKardexList() {
         return kardexList;
@@ -187,15 +151,6 @@ public class Producto implements Serializable {
 
     public void setKardexList(List<Kardex> kardexList) {
         this.kardexList = kardexList;
-    }
-
-    @XmlTransient
-    public List<Detallecompra> getDetallecompraList() {
-        return detallecompraList;
-    }
-
-    public void setDetallecompraList(List<Detallecompra> detallecompraList) {
-        this.detallecompraList = detallecompraList;
     }
 
     @Override

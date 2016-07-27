@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,15 +23,15 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Pablo Lopez <panlopezv@gmail.com>
+ * @author Rosario
  */
 @Entity
-@Table(catalog = "hrobles", schema = "")
+@Table(name = "proveedor")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Proveedor.findAll", query = "SELECT p FROM Proveedor p"),
     @NamedQuery(name = "Proveedor.findByIdProveedor", query = "SELECT p FROM Proveedor p WHERE p.idProveedor = :idProveedor"),
-    @NamedQuery(name = "Proveedor.findByNombre", query = "SELECT p FROM Proveedor p WHERE p.nombre like :nombre"),
+    @NamedQuery(name = "Proveedor.findByNombre", query = "SELECT p FROM Proveedor p WHERE p.nombre = :nombre"),
     @NamedQuery(name = "Proveedor.findByNit", query = "SELECT p FROM Proveedor p WHERE p.nit = :nit"),
     @NamedQuery(name = "Proveedor.findByTelefono", query = "SELECT p FROM Proveedor p WHERE p.telefono = :telefono"),
     @NamedQuery(name = "Proveedor.findByCorreo", query = "SELECT p FROM Proveedor p WHERE p.correo = :correo"),
@@ -41,12 +42,18 @@ public class Proveedor implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    private Integer idProveedor;
+    @Column(name = "idProveedor")
+    private Long idProveedor;
     @Basic(optional = false)
+    @Column(name = "Nombre")
     private String nombre;
+    @Column(name = "NIT")
     private String nit;
+    @Column(name = "Telefono")
     private String telefono;
+    @Column(name = "Correo")
     private String correo;
+    @Column(name = "Encargado")
     private String encargado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProveedor")
     private List<Compra> compraList;
@@ -54,20 +61,20 @@ public class Proveedor implements Serializable {
     public Proveedor() {
     }
 
-    public Proveedor(Integer idProveedor) {
+    public Proveedor(Long idProveedor) {
         this.idProveedor = idProveedor;
     }
 
-    public Proveedor(Integer idProveedor, String nombre) {
+    public Proveedor(Long idProveedor, String nombre) {
         this.idProveedor = idProveedor;
         this.nombre = nombre;
     }
 
-    public Integer getIdProveedor() {
+    public Long getIdProveedor() {
         return idProveedor;
     }
 
-    public void setIdProveedor(Integer idProveedor) {
+    public void setIdProveedor(Long idProveedor) {
         this.idProveedor = idProveedor;
     }
 

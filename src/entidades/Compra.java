@@ -10,11 +10,13 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -27,19 +29,19 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Pablo Lopez <panlopezv@gmail.com>
+ * @author Rosario
  */
 @Entity
-@Table(catalog = "hrobles", schema = "")
+@Table(name = "compra")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Compra.findAll", query = "SELECT c FROM Compra c"),
     @NamedQuery(name = "Compra.findByIdCompra", query = "SELECT c FROM Compra c WHERE c.idCompra = :idCompra"),
-    @NamedQuery(name = "Compra.findByNoOrdenCyP", query = "SELECT c FROM Compra c WHERE c.noOrdenCyP = :noOrdenCyP"),
     @NamedQuery(name = "Compra.findByFecha", query = "SELECT c FROM Compra c WHERE c.fecha = :fecha"),
-    @NamedQuery(name = "Compra.findByNumero", query = "SELECT c FROM Compra c WHERE c.numero = :numero"),
     @NamedQuery(name = "Compra.findByPrograma", query = "SELECT c FROM Compra c WHERE c.programa = :programa"),
     @NamedQuery(name = "Compra.findByDependencia", query = "SELECT c FROM Compra c WHERE c.dependencia = :dependencia"),
+    @NamedQuery(name = "Compra.findByNoOrdenCyP", query = "SELECT c FROM Compra c WHERE c.noOrdenCyP = :noOrdenCyP"),
+    @NamedQuery(name = "Compra.findByObservacion", query = "SELECT c FROM Compra c WHERE c.observacion = :observacion"),
     @NamedQuery(name = "Compra.findByTotal", query = "SELECT c FROM Compra c WHERE c.total = :total")})
 public class Compra implements Serializable {
 
@@ -47,20 +49,29 @@ public class Compra implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    private Integer idCompra;
+    @Column(name = "idCompra")
+    private Long idCompra;
     @Basic(optional = false)
-    private int noOrdenCyP;
-    @Basic(optional = false)
+    @Column(name = "Fecha")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
     @Basic(optional = false)
-    private int numero;
+    @Lob
+    @Column(name = "Numero")
+    private String numero;
     @Basic(optional = false)
+    @Column(name = "Programa")
     private String programa;
     @Basic(optional = false)
+    @Column(name = "Dependencia")
     private String dependencia;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    private Double total;
+    @Column(name = "NoOrdenCyP")
+    private Integer noOrdenCyP;
+    @Column(name = "Observacion")
+    private String observacion;
+    @Basic(optional = false)
+    @Column(name = "Total")
+    private double total;
     @JoinColumn(name = "idProveedor", referencedColumnName = "idProveedor")
     @ManyToOne(optional = false)
     private Proveedor idProveedor;
@@ -73,33 +84,25 @@ public class Compra implements Serializable {
     public Compra() {
     }
 
-    public Compra(Integer idCompra) {
+    public Compra(Long idCompra) {
         this.idCompra = idCompra;
     }
 
-    public Compra(Integer idCompra, int noOrdenCyP, Date fecha, int numero, String programa, String dependencia) {
+    public Compra(Long idCompra, Date fecha, String numero, String programa, String dependencia, double total) {
         this.idCompra = idCompra;
-        this.noOrdenCyP = noOrdenCyP;
         this.fecha = fecha;
         this.numero = numero;
         this.programa = programa;
         this.dependencia = dependencia;
+        this.total = total;
     }
 
-    public Integer getIdCompra() {
+    public Long getIdCompra() {
         return idCompra;
     }
 
-    public void setIdCompra(Integer idCompra) {
+    public void setIdCompra(Long idCompra) {
         this.idCompra = idCompra;
-    }
-
-    public int getNoOrdenCyP() {
-        return noOrdenCyP;
-    }
-
-    public void setNoOrdenCyP(int noOrdenCyP) {
-        this.noOrdenCyP = noOrdenCyP;
     }
 
     public Date getFecha() {
@@ -110,11 +113,11 @@ public class Compra implements Serializable {
         this.fecha = fecha;
     }
 
-    public int getNumero() {
+    public String getNumero() {
         return numero;
     }
 
-    public void setNumero(int numero) {
+    public void setNumero(String numero) {
         this.numero = numero;
     }
 
@@ -134,11 +137,27 @@ public class Compra implements Serializable {
         this.dependencia = dependencia;
     }
 
-    public Double getTotal() {
+    public Integer getNoOrdenCyP() {
+        return noOrdenCyP;
+    }
+
+    public void setNoOrdenCyP(Integer noOrdenCyP) {
+        this.noOrdenCyP = noOrdenCyP;
+    }
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
+    }
+
+    public double getTotal() {
         return total;
     }
 
-    public void setTotal(Double total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 

@@ -7,6 +7,7 @@ package entidades;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,10 +21,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Pablo Lopez <panlopezv@gmail.com>
+ * @author Rosario
  */
 @Entity
-@Table(catalog = "hrobles", schema = "")
+@Table(name = "detalleventa")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Detalleventa.findAll", query = "SELECT d FROM Detalleventa d"),
@@ -38,39 +39,44 @@ public class Detalleventa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    private Integer idDetalleVenta;
+    @Column(name = "idDetalleVenta")
+    private Long idDetalleVenta;
     @Basic(optional = false)
+    @Column(name = "CantidadSolicitada")
     private int cantidadSolicitada;
     @Basic(optional = false)
+    @Column(name = "CantidadEntregada")
     private int cantidadEntregada;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "Precio")
     private Double precio;
+    @Column(name = "Subtotal")
     private Double subtotal;
+    @JoinColumn(name = "idLote", referencedColumnName = "idLote")
+    @ManyToOne(optional = false)
+    private Lote idLote;
     @JoinColumn(name = "idVenta", referencedColumnName = "idVenta")
     @ManyToOne(optional = false)
     private Venta idVenta;
-    @JoinColumn(name = "idProducto", referencedColumnName = "idProducto")
-    @ManyToOne(optional = false)
-    private Producto idProducto;
 
     public Detalleventa() {
     }
 
-    public Detalleventa(Integer idDetalleVenta) {
+    public Detalleventa(Long idDetalleVenta) {
         this.idDetalleVenta = idDetalleVenta;
     }
 
-    public Detalleventa(Integer idDetalleVenta, int cantidadSolicitada, int cantidadEntregada) {
+    public Detalleventa(Long idDetalleVenta, int cantidadSolicitada, int cantidadEntregada) {
         this.idDetalleVenta = idDetalleVenta;
         this.cantidadSolicitada = cantidadSolicitada;
         this.cantidadEntregada = cantidadEntregada;
     }
 
-    public Integer getIdDetalleVenta() {
+    public Long getIdDetalleVenta() {
         return idDetalleVenta;
     }
 
-    public void setIdDetalleVenta(Integer idDetalleVenta) {
+    public void setIdDetalleVenta(Long idDetalleVenta) {
         this.idDetalleVenta = idDetalleVenta;
     }
 
@@ -106,20 +112,20 @@ public class Detalleventa implements Serializable {
         this.subtotal = subtotal;
     }
 
+    public Lote getIdLote() {
+        return idLote;
+    }
+
+    public void setIdLote(Lote idLote) {
+        this.idLote = idLote;
+    }
+
     public Venta getIdVenta() {
         return idVenta;
     }
 
     public void setIdVenta(Venta idVenta) {
         this.idVenta = idVenta;
-    }
-
-    public Producto getIdProducto() {
-        return idProducto;
-    }
-
-    public void setIdProducto(Producto idProducto) {
-        this.idProducto = idProducto;
     }
 
     @Override

@@ -555,7 +555,7 @@ public class Compras extends javax.swing.JInternalFrame {
         Compra compra= new Compra();
         compra.setFecha(dateChooserCombo1.getSelectedDate().getTime());
         compra.setNoOrdenCyP(Integer.parseInt(jTextField1.getText()));
-        compra.setNumero(Integer.parseInt(jTextField2.getText()));
+        compra.setNumero(jTextField2.getText());
         this.compra.finalizarCompra(compra);
     }//GEN-LAST:event_jButton2ActionPerformed
 

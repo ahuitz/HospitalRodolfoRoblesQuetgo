@@ -6,13 +6,10 @@
 package Vista;
 
 import conexion.Conexion;
-import controladores.AlmacenJpaController;
-import controladores.CuentaJpaController;
-import controladores.PresentacionJpaController;
-import controladores.RenglonJpaController;
-import controladores.exceptions.PreexistingEntityException;
+import Controladores.AlmacenJpaController;
+import Controladores.PresentacionJpaController;
+import Controladores.RenglonJpaController;
 import entidades.Almacen;
-import entidades.Cuenta;
 import entidades.Presentacion;
 import entidades.Renglon;
 import java.util.List;
@@ -38,12 +35,10 @@ public class RenglonPres extends javax.swing.JInternalFrame {
             jComboBox1.addItem(p.getPresentacion());
         }
     }
-    PresentacionJpaController Cpres;
-    CuentaJpaController Ccuenta;
+    PresentacionJpaController Cpres;    
     RenglonJpaController Crenglon;
     AlmacenJpaController Calmacen;
     Presentacion Epres=new Presentacion();    
-    Cuenta Ecuenta=new Cuenta();
     Renglon Erenglon=new Renglon();
     Almacen Ealmacen=new Almacen();
     public int opcion;
@@ -176,10 +171,10 @@ public class RenglonPres extends javax.swing.JInternalFrame {
             Cpres=new PresentacionJpaController(Conexion.getConexion("admin", "admin123").getEmf());
             Cpres.create(Epres);
         }else if(opcion==2){
-            Ecuenta.setCuenta(jTextField1.getText());
+            /*Ecuenta.setCuenta(jTextField1.getText());
             Ecuenta.setNomenclatura(jTextField2.getText());        
             Ccuenta=new CuentaJpaController(Conexion.getConexion("admin", "admin123").getEmf());
-            Ccuenta.create(Ecuenta);
+            Ccuenta.create(Ecuenta);*/
         }else if(opcion==3){
             Erenglon.setNoRenglon(Integer.parseInt(jTextField1.getText()));
             Erenglon.setRenglon(jTextField2.getText());                       
