@@ -23,12 +23,10 @@ public class Contenedor extends javax.swing.JFrame {
         this.setExtendedState(MAXIMIZED_BOTH);
     }
     @Override
-    public Image getIconImage() {
-        Image retValue = Toolkit.getDefaultToolkit().
-                getImage(ClassLoader.getSystemResource("Imagenes/hospital32.png"));
+    public Image getIconImage(){
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Imagenes/hospital32.png"));
         return retValue;
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

@@ -5,10 +5,10 @@
  */
 package modelos;
 
+import Controladores.DetalleventaJpaController;
+import Controladores.PersonaJpaController;
+import Controladores.VentaJpaController;
 import conexion.Conexion;
-import controladores.DetalleventaJpaController;
-import controladores.PersonaJpaController;
-import controladores.VentaJpaController;
 import entidades.Departamento;
 import entidades.Persona;
 import entidades.Producto;

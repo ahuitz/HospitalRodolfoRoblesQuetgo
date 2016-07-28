@@ -5,6 +5,8 @@
  */
 package ModeloTablas;
 
+import entidades.Producto;
+import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -13,20 +15,63 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ModeloProducto extends AbstractTableModel{
 
+    private List<Producto> producto;
+    private String columnas[]={"Codigo","Nombre","Existencia"};
+    private Class[] tipos = new Class[]{java.lang.Integer.class, java.lang.String.class, java.lang.Double.class};
+    
+    public ModeloProducto(List<Producto> producto){
+        this.producto=producto; 
+    }
+    
     @Override
     public int getRowCount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return producto.size();
     }
 
     @Override
     public int getColumnCount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return columnas.length;
     }
 
     @Override
-    public Object getValueAt(int i, int i1) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        Producto c = this.producto.get(rowIndex);
+        
+        switch(columnIndex){
+            case 0:
+                return c.getCodigo();
+            case 1:
+                return c.getProducto();
+            case 2:
+                return c.getExistencia();
+            default:return null;
+        }
+    }
+    @Override
+    public String getColumnName(int columnIndex){
+        return columnas[columnIndex];
     }
     
+    
+    @Override
+    public Class getColumnClass(int columnIndex) {
+    return tipos [columnIndex];
+    }
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex){
+        if(columnIndex>2){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex){
+        
+    }
+    public List<Producto> getLote(){
+        return producto;
+    }
     
 }

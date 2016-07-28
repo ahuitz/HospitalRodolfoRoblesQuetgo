@@ -9,14 +9,13 @@ import ModeloTablas.ModeloProducto;
 import ModeloTablas.ModeloProductoC;
 import ModeloTablas.ModeloProveedor;
 import conexion.Conexion;
-import controladores.AlmacenJpaController;
-import controladores.CompraJpaController;
-import controladores.CuentaJpaController;
-import controladores.DetallecompraJpaController;
-import controladores.PresentacionJpaController;
-import controladores.ProductoJpaController;
-import controladores.ProveedorJpaController;
-import controladores.RenglonJpaController;
+import Controladores.AlmacenJpaController;
+import Controladores.CompraJpaController;
+import Controladores.DetallecompraJpaController;
+import Controladores.PresentacionJpaController;
+import Controladores.ProductoJpaController;
+import Controladores.ProveedorJpaController;
+import Controladores.RenglonJpaController;
 import entidades.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +34,6 @@ public class CCompra extends COperacion {
     private ProveedorJpaController controladorProveedor;
     private AlmacenJpaController controladorAlmacen;
     private RenglonJpaController controladorRenglon;
-    private CuentaJpaController controladorCuenta;
     private DetallecompraJpaController controladordetalle;
     public ArrayList<CProducto> productos;
     public Compra compra;
@@ -49,9 +47,7 @@ public class CCompra extends COperacion {
         this.controladorProveedor =new ProveedorJpaController(Conexion.getConexion().getEmf());
         this.controladorAlmacen = new AlmacenJpaController(Conexion.getConexion().getEmf());
         this.controladorRenglon = new RenglonJpaController(Conexion.getConexion().getEmf());
-        this.controladorCuenta = new CuentaJpaController(Conexion.getConexion().getEmf());
-        this.controladordetalle = new DetallecompraJpaController(Conexion.getConexion().getEmf());
-        
+        this.controladordetalle = new DetallecompraJpaController(Conexion.getConexion().getEmf());     
         this.productos =  new ArrayList<>();
         this.compra = new Compra();
         proveedor=new Proveedor();
@@ -61,7 +57,7 @@ public class CCompra extends COperacion {
 
     public void crearProducto(Producto prducto) {
         controladorProducto.create(prducto);
-        controladorProducto.findProducto(1);
+      //  controladorProducto.findProducto(1);
        
     }
 
@@ -87,7 +83,7 @@ public class CCompra extends COperacion {
     public void agregarProducto(Producto producto,int n) {
         
         productos.add(new CProducto(producto,n));
-        Total=Total+producto.getPrecio()*n;
+       // Total=Total+producto.getPrecio()*n;
     }
 
     public void quitarProducto(int posicion) {
@@ -134,12 +130,13 @@ public class CCompra extends COperacion {
         compra.setIdProveedor(proveedor);
         
         controladorCompra.create(compra);
-        int id=compra.getIdCompra();
+        Long id=compra.getIdCompra();
         for(CProducto p:productos){
             Detallecompra d= new Detallecompra();
             d.setCantidad(p.cantidad);
-            d.setIdProducto(p.p);
-            d.setSubtotal(p.cantidad*p.precio);
+        
+         //   d.setIdProducto(p.p);
+           // d.setSubtotal(p.cantidad*p.precio);
             controladordetalle.create(d);
             
             
@@ -177,8 +174,6 @@ public class CCompra extends COperacion {
         return controladorRenglon;
     }
 
-    public CuentaJpaController getControladorCuenta() {
-        return controladorCuenta;
-    }
+    
 
 }

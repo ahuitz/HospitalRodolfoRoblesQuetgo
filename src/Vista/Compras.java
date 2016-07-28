@@ -467,7 +467,7 @@ public class Compras extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
             jDialog1.dispose();
-            entidades.Producto p = ((ModeloTablas.ModeloProducto) jTable2.getModel()).getCuentas().get(jTable2.getSelectedRow());
+            entidades.Producto p = ((ModeloTablas.ModeloProducto) jTable2.getModel()).getLote().get(jTable2.getSelectedRow());
             boolean n = true;
             String Mensaje="Cantidad";
             do {
@@ -542,7 +542,7 @@ public class Compras extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
             jDialog2.dispose();
-            entidades.Proveedor p =((ModeloProveedor)jTable3.getModel()).getproductos().get(jTable3.getSelectedRow());
+            entidades.Proveedor p =((ModeloProveedor)jTable3.getModel()).getProductos().get(jTable3.getSelectedRow());
             compra.agregarProveedor(p);
             jTextField8.setText(p.getNombre()+" - "+p.getNit());
             
