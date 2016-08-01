@@ -6,9 +6,7 @@
 package entidades;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,10 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -35,7 +31,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Proveedor.findByNit", query = "SELECT p FROM Proveedor p WHERE p.nit = :nit"),
     @NamedQuery(name = "Proveedor.findByTelefono", query = "SELECT p FROM Proveedor p WHERE p.telefono = :telefono"),
     @NamedQuery(name = "Proveedor.findByCorreo", query = "SELECT p FROM Proveedor p WHERE p.correo = :correo"),
-    @NamedQuery(name = "Proveedor.findByEncargado", query = "SELECT p FROM Proveedor p WHERE p.encargado = :encargado")})
+    @NamedQuery(name = "Proveedor.findByEncargado", query = "SELECT p FROM Proveedor p WHERE p.encargado = :encargado"),
+    @NamedQuery(name = "Proveedor.findByDireccion", query = "SELECT p FROM Proveedor p WHERE p.direccion = :direccion")})
 public class Proveedor implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -55,8 +52,8 @@ public class Proveedor implements Serializable {
     private String correo;
     @Column(name = "Encargado")
     private String encargado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProveedor")
-    private List<Compra> compraList;
+    @Column(name = "Direccion")
+    private String direccion;
 
     public Proveedor() {
     }
@@ -118,13 +115,12 @@ public class Proveedor implements Serializable {
         this.encargado = encargado;
     }
 
-    @XmlTransient
-    public List<Compra> getCompraList() {
-        return compraList;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setCompraList(List<Compra> compraList) {
-        this.compraList = compraList;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     @Override
