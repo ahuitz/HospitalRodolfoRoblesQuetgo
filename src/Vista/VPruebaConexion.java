@@ -14,7 +14,7 @@ import modelos.FabricaOperacion;
  *
  * @author Pablo Lopez <panlopezv@gmail.com>
  */
-public class PruebaConexion {
+public class VPruebaConexion {
 
     /**
      * @param args the command line arguments

@@ -20,14 +20,14 @@ import modelos.FabricaOperacion;
  *
  * @author Rosario
  */
-public class Requisicion extends javax.swing.JInternalFrame {   
+public class VRequisicion extends javax.swing.JInternalFrame {   
     /**
      * Creates new form Requisicion
      */
         FabricaOperacion fabrica = new FabricaOperacion();
         //CVenta nuevaVenta = (CVenta) fabrica.crearOperacion(0);
            
-        public Requisicion() {
+        public VRequisicion() {
         initComponents();
            
     }

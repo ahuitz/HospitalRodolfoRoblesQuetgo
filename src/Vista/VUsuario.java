@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
  *
  * @author Rosario
  */
-public class Usuario extends javax.swing.JInternalFrame {
+public class VUsuario extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form Usuario
@@ -32,7 +32,7 @@ public class Usuario extends javax.swing.JInternalFrame {
            DepartamentoJpaController DEPART;
            Departamento dep = new Departamento();
            String de;
-    public Usuario() {
+    public VUsuario() {
         initComponents();
 //       
             Conexion con = Conexion.getConexion("yes123","yes123");

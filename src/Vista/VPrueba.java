@@ -11,7 +11,7 @@ import conexion.Conexion;
  *
  * @author modm_
  */
-public class Prueba {
+public class VPrueba {
 
     /**
      * @param args the command line arguments

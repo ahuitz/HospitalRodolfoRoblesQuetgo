@@ -12,12 +12,12 @@ import entidades.Producto;
  *
  * @author Rosario
  */
-public class Productos extends javax.swing.JInternalFrame {
+public class VProductos extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form Producto
      */
-    public Productos() {
+    public VProductos() {
         initComponents();
     }
     
@@ -284,9 +284,9 @@ public class Productos extends javax.swing.JInternalFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        RenglonPres VrenPres=new RenglonPres();
+        VRenglonPres VrenPres=new VRenglonPres();
         VrenPres.opcion=3;
-        Contenedor.jDesktopPane1.add(VrenPres);        
+        VContenedor.jDesktopPane1.add(VrenPres);        
         VrenPres.show();
         VrenPres.setTitle("Renglón");        
         VrenPres.jLabel1.setText("No. Renglon");
@@ -295,9 +295,9 @@ public class Productos extends javax.swing.JInternalFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:        
-        RenglonPres VrenPres=new RenglonPres();
+        VRenglonPres VrenPres=new VRenglonPres();
         VrenPres.opcion=1;
-        Contenedor.jDesktopPane1.add(VrenPres);        
+        VContenedor.jDesktopPane1.add(VrenPres);        
         VrenPres.show();
         VrenPres.setTitle("Presentación");
         VrenPres.jLabel1.setText("Presentación");
@@ -314,9 +314,9 @@ public class Productos extends javax.swing.JInternalFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        RenglonPres VrenPres=new RenglonPres();
+        VRenglonPres VrenPres=new VRenglonPres();
         VrenPres.opcion=2;
-        Contenedor.jDesktopPane1.add(VrenPres);        
+        VContenedor.jDesktopPane1.add(VrenPres);        
         VrenPres.show();
         VrenPres.setTitle("Cuenta");
         VrenPres.jLabel1.setText("Cuenta");

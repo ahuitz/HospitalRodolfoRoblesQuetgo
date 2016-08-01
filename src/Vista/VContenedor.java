@@ -13,12 +13,12 @@ import sesion.Sesion_Administrador;
  *
  * @author Rosario
  */
-public class Contenedor extends javax.swing.JFrame {
+public class VContenedor extends javax.swing.JFrame {
 
     /**
      * Creates new form Contenedor
      */
-    public Contenedor() {
+    public VContenedor() {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
     }
@@ -214,7 +214,7 @@ public class Contenedor extends javax.swing.JFrame {
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
-        Requisicion Vreq=new Requisicion();
+        VRequisicion Vreq=new VRequisicion();
         this.jDesktopPane1.add(Vreq);
         Vreq.show();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
@@ -222,7 +222,7 @@ public class Contenedor extends javax.swing.JFrame {
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // TODO add your handling code here:
         if (jMenuItem6.getText().equals("Iniciar sesion")){
-            InicioSesion inicioSesion = new InicioSesion();
+            VInicioSesion inicioSesion = new VInicioSesion();
             this.jDesktopPane1.add(inicioSesion);       
             inicioSesion.show();
             Sesion_Administrador sesion = new Sesion_Administrador();
@@ -240,7 +240,7 @@ public class Contenedor extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        Proveedor Vprov=new Proveedor();
+        VProveedor Vprov=new VProveedor();
         this.jDesktopPane1.add(Vprov);       
         Vprov.show();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
@@ -252,21 +252,21 @@ public class Contenedor extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-        Compras Vcompra=new Compras();
+        VCompras Vcompra=new VCompras();
         this.jDesktopPane1.add(Vcompra);
         Vcompra.show();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenu6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu6MouseClicked
         // TODO add your handling code here:
-        Productos Vpro=new Productos();
+        VProductos Vpro=new VProductos();
         this.jDesktopPane1.add(Vpro);
         Vpro.show();
     }//GEN-LAST:event_jMenu6MouseClicked
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
-        Usuario Vus=new Usuario();
+        VUsuario Vus=new VUsuario();
         this.jDesktopPane1.add(Vus);
         Vus.show();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
@@ -299,20 +299,21 @@ public class Contenedor extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Contenedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VContenedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Contenedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VContenedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Contenedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VContenedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Contenedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VContenedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Contenedor().setVisible(true);
+                new VContenedor().setVisible(true);
             }
         });
     }

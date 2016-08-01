@@ -25,13 +25,13 @@ import modelos.FabricaOperacion;
  *
  * @author Rosario
  */
-public class Compras extends javax.swing.JInternalFrame {
+public class VCompras extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form Comprar
      */
    
-    public Compras() {
+    public VCompras() {
         initComponents();
         Conexion c = Conexion.getConexion("admin", "admin123");
        
@@ -443,9 +443,9 @@ public class Compras extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Proveedor Vprov=new Proveedor();  
+        VProveedor Vprov=new VProveedor();  
         //Contenedor contenedor=new Contenedor();
-        Contenedor.jDesktopPane1.add(Vprov);
+        VContenedor.jDesktopPane1.add(Vprov);
         Vprov.show();
     }//GEN-LAST:event_jButton1ActionPerformed
 
