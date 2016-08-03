@@ -15,6 +15,9 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import org.eclipse.persistence.internal.helper.JPAClassLoaderHolder;
 
 /**
  *
@@ -30,7 +33,10 @@ public class ProveedorJpaController implements Serializable {
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
-
+    /**     * 
+     * @param proveedor 
+     * Mensaje para indicar que los datos de los proveedores han sido ingresados correctamente
+     */
     public void create(Proveedor proveedor) {
         EntityManager em = null;
         try {
@@ -38,6 +44,7 @@ public class ProveedorJpaController implements Serializable {
             em.getTransaction().begin();
             em.persist(proveedor);
             em.getTransaction().commit();
+            JOptionPane.showMessageDialog(null, "Datos de proveedor ingresados correctamente");
         } finally {
             if (em != null) {
                 em.close();

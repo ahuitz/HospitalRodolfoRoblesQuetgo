@@ -8,6 +8,7 @@ package Vista;
 import Controladores.ProveedorJpaController;
 import conexion.Conexion;
 import entidades.Proveedor;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -20,10 +21,9 @@ public class VProveedor extends javax.swing.JInternalFrame {
      */
     public VProveedor() {
         initComponents();
-    }
-    Conexion conex;
+    }    
     
-    private ProveedorJpaController Cprov=new ProveedorJpaController(conex.getEmf());
+    private ProveedorJpaController Cprov=new ProveedorJpaController(Conexion.getConexion("usara","123").getEmf());
     private Proveedor Epro=new Proveedor();
     /**
      * This method is called from within the constructor to initialize the form.
@@ -204,8 +204,12 @@ public class VProveedor extends javax.swing.JInternalFrame {
         // TODO add your handling code here:       
         Epro.setNit(jTextField1.getText());
         Epro.setNombre(jTextField2.getText());
-        Epro.setCorreo(title);
-        //Cprov.create(prov);
+        Epro.setDireccion(jTextField3.getText());
+        Epro.setCorreo(jTextField4.getText());
+        Epro.setTelefono(jTextField5.getText());
+        Epro.setEncargado(jTextField6.getText());
+        
+        Cprov.create(Epro);
         
         
     }//GEN-LAST:event_jButton1ActionPerformed
